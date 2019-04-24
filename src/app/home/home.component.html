@@ -1,3 +1,19 @@
 <p>
   home works!
 </p>
+
+<!--
+
+  <div>
+  {{ homepageData | json }}
+</div>
+
+-->
+<div *ngIf="homepageData">
+  <div class="text-data">{{ homepageData.status }}</div>
+  <div class="text-data">{{ homepageData.data | json }}</div>
+  <div class="text-data">{{ homepageData.location }}</div>
+  <div class="text-data">{{ homepageData.temp }}</div>
+  <div class="text-data">{{ homepageData.commander }}</div>
+  <div class="text-data">{{ homepageData.location }}</div>
+</div>
