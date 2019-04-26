@@ -1,19 +1,10 @@
-<p>
-  home works!
-</p>
-
-<!--
-
-  <div>
-  {{ homepageData | json }}
-</div>
-
--->
-<div *ngIf="homepageData">
-  <div class="text-data">{{ homepageData.status }}</div>
-  <div class="text-data">{{ homepageData.data | json }}</div>
-  <div class="text-data">{{ homepageData.location }}</div>
-  <div class="text-data">{{ homepageData.temp }}</div>
-  <div class="text-data">{{ homepageData.commander }}</div>
-  <div class="text-data">{{ homepageData.location }}</div>
-</div>
+<body>
+  <div *ngIf="homepageData">
+    <div class="text-data">Current Mission in progress:    {{ homepageData.mission }}</div>
+    <div class="text-data">Habitat Location:    {{homepageData.location }}</div>
+    <div class="text-data">Outside Habitat temp:     {{ homepageData.temp }}c </div>
+    <div class="text-data">On Board Commander:     {{ homepageData.commander }}</div>
+    <div class="text-data">Last Communication Time:    {{ homepageData.date.day}} {{ homepageData.date.time}}</div>
+    <div class="text-data">Current Mission Status:    {{ homepageData.status }}</div>
+  </div>
+</body>

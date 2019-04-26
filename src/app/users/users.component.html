@@ -1,2 +1,39 @@
-<app-table></app-table>
+<!-- <app-table></app-table> -->
+<!---<div>{{userData |json}}</div> -->
+<!-- <div *ngIf="userData">
+    <ul *ngFor="let user of userData">
+        <li>{{user.id}} {{user.name}} {{user.age}} {{user.gender}} {{user.isAdmin}}</li>
+    </ul>
+
+</div> -->
+        <!-- <div class="text-data">{{ userData.userId1.name }}</div> -->
+        <!-- <div class="text-data">{{ userData.data | json }}</div>
+        <div class="text-data">{{ userData.location }}</div>
+        <div class="text-data">{{ userData.temp }}</div>
+        <div class="text-data">{{ userData.commander }}</div> -->
+        
+
+        <table class="table table-hover">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">isAdmin</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let user of userData">
+                    <th scope="row">{{user.id}}</th>
+                    <td>{{user.name}}</td>
+                    <td>{{user.age}}</td>
+                    <td>{{user.gender}}</td>
+                    <td>{{user.isAdmin}}</td>
+                  </tr>                
+            
+                </tbody>
+              </table>
+
+
 <app-buttons></app-buttons>

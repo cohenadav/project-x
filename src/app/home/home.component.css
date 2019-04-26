@@ -1,0 +1,9 @@
+body{
+    padding: 20px;
+    font-size: 150%;
+    font-style: italic;
+    font-weight: bold;
+    background-color: lightgrey;
+    width: 500px;
+    border: 15px solid rgb(0, 2, 128);
+}

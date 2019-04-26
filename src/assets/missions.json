@@ -1,0 +1,6 @@
+[
+    { "id":1, "name": "DMARS-01", "type":"Experimental", "sdate":"20/2/19", "location":"Mitzpe Ramon", "command":"Affek Yair", "status":"Finished" },
+    { "id":2, "name": "Green North", "type":"Educational", "sdate":"14/4/19", "location":"Ramat Hagolan", "command":"Ori Sasson", "status":"In process" },
+    { "id":3, "name": "DMARS-02", "type":"Experimental", "sdate":"17/11/19", "location":"Galil", "command":"Yael Levi", "status":"Scheduled" },
+    { "id":4, "name": "End of the Road", "type":"Educational", "sdate":"23/1/19", "location":"Metula", "command":"May Ron", "status":"Scheduled" }   
+]

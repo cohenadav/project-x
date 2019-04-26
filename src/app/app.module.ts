@@ -46,6 +46,9 @@ import { HttpClientModule } from "@angular/common/http";
         path: "users",
         component: UsersComponent
       },
+      // {path: "users/:userId",
+      //component: UserComponent
+      // },
       {
         path: "activities",
         component: ActivitiesComponent

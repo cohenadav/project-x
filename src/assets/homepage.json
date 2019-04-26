@@ -1,10 +1,10 @@
 {
   "mission": "DMARS 22",
-  "location": "Tel avic",
+  "location": "Mitzpe Ramon",
   "temp": "22",
   "commander": "Major tom",
   "date": {
-    "day": "sep 12",
+    "day": "Sep 12",
     "time": "16:42"
   },
   "status": "AS_PLANNED"
