@@ -19,7 +19,12 @@ export class UserFormComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  onSubmit(x){
+    console.log(x)
+  }
+  submit(f){
+    console.log(f);
+  }
   // onSubmit(input: HTMLInputElement){ 
   //   let post = {title: input.value};
   //   input.value = '';

@@ -1,6 +1,6 @@
 [
-{ "id":1, "name": "amit", "age":30, "gender":"M", "isAdmin":true   },
-{ "id":2, "name": "idan", "age":14, "gender":"F", "isAdmin":false  },
-{ "id":3, "name": "aviv", "age":54, "gender":"M", "isAdmin":false  },
-{ "id":4, "name": "boaz", "age":32, "gender":"F", "isAdmin":true  }
+{ "UserID":1, "name": "amit", "age":30, "gender":"M", "isAdmin":true   },
+{ "UserID":2, "name": "idan", "age":14, "gender":"F", "isAdmin":false  },
+{ "UserID":3, "name": "aviv", "age":54, "gender":"M", "isAdmin":false  },
+{ "UserID":4, "name": "boaz", "age":32, "gender":"F", "isAdmin":true  }
 ]

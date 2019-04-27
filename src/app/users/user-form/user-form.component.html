@@ -1,15 +1,45 @@
-<form>
+<!-- <form>
+  <div class="form-group">
+    <label for="Name" class="col-sm-2 col-form-label">Name</label>
+    <input ngModel name="Name" #Name="ngModel" (change)="onSubmit(Name)" id="Name" type="text" class="form-control" class="col-sm-4">
+  </div>
+  <div class="form-group">
+    <label for="age" class="col-sm-2 col-form-label">Age</label>
+    <input id="age" cols="5" rows="10" class="form-control" class="col-sm-4">
+  </div>
+  <button class="btn btn-primary">Submmit</button>
+</form> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<form #f="ngForm" (ngSubmit) ="submit(f.value)">
   <div class="form-group row">
     <label for="name" class="col-sm-2 col-form-label">Name</label>
     <div class="col-sm-5">
-      <input (keyup.enter)="onSubmit(title)" #title type="text" class="form-control" placeholder="Name">
-      <!-- input ... ng-model="userData.name" -->
-    </div>
+      <input ngModel name="loginName" #loginName="ngModel" (change)="onSubmit(loginName)" type="text" class="form-control" placeholder="Name">
+         </div>
   </div>
   <div class="form-group row">
     <label for="age" class="col-sm-2 col-form-label">Age</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" placeholder="Age">
+      <input ngModel name="age" #age="ngModel" (change)="onSubmit(age)" type="text" class="form-control" placeholder="Age">
     </div>
   </div>
   <fieldset class="form-group">
@@ -17,13 +47,13 @@
       <legend class="col-form-label col-sm-2 pt-0">Type</legend>
       <div class="col-sm-10">
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+          <input ngModel class="form-check-input" type="radio" name="Type" id="gridRadios1" value="1">
           <label class="form-check-label" for="gridRadios1">
             Ramonaut
           </label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+          <input ngModel class="form-check-input" type="radio" name="Type" id="gridRadios2" value="0">
           <label class="form-check-label" for="gridRadios2">
             Control
           </label>
@@ -31,18 +61,19 @@
       </div>
     </div>
   </fieldset>
+
   <fieldset class="form-group">
     <div class="row">
       <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
       <div class="col-sm-10">
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios2.3" value="option1">
+          <input ngModel class="form-check-input" type="radio" name="gender" id="gridRadios3" value="0">
           <label class="form-check-label" for="gridRadios3">
             Male
           </label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios2.4" value="option2">
+          <input ngModel class="form-check-input" type="radio" name="gender" id="gridRadios4" value="1">
           <label class="form-check-label" for="gridRadios4">
             Female
           </label>
@@ -50,17 +81,19 @@
       </div>
     </div>
   </fieldset>
+  
   <div class="form-group row">
     <div class="col-sm-2"></div>
     <div class="col-sm-10">
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="gridCheck1">
-        <label class="form-check-label" for="gridCheck1">
+        <input class="form-check-input" ngModel name="isAdmin" type="checkbox" id="isAdmin">
+        <label class="form-check-label" for="isAdmin">
           is Admin?
         </label>
       </div>
     </div>
   </div>
+  <p>{{f.value | json}}</p>
   <div class="form-group row">
     <div class="col-sm-10">
       <button type="submit" class="btn btn-primary"  >Submmit</button>
