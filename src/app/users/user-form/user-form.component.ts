@@ -11,6 +11,7 @@ let data: any;
 })
 export class UserFormComponent implements OnInit {
   public userFormData: any = data;
+  public isRamonaut = true;
   // public userData this data comes from binded on userFormComponent 
 
   // homepageData undefined
@@ -25,6 +26,11 @@ export class UserFormComponent implements OnInit {
   submit(f){
     console.log(f);
   }
+  roleCheck(value){
+    if(value == 1){
+    this.isRamonaut = false;
+  }else this.isRamonaut = true;
+}
   // onSubmit(input: HTMLInputElement){ 
   //   let post = {title: input.value};
   //   input.value = '';

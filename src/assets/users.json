@@ -1,6 +1,6 @@
 [
-{ "UserID":1, "name": "amit", "age":30, "gender":"M", "isAdmin":true   },
-{ "UserID":2, "name": "idan", "age":14, "gender":"F", "isAdmin":false  },
-{ "UserID":3, "name": "aviv", "age":54, "gender":"M", "isAdmin":false  },
-{ "UserID":4, "name": "boaz", "age":32, "gender":"F", "isAdmin":true  }
+{ "UserID":1, "name": "amit","Type":"1"  ,"age":30, "Gender":"0", "isAdmin":true, "Height": "190" ,"Weight": "90" ,"Physical_Rate":"1"},
+{ "UserID":2, "name": "idan","Type":"1"  ,"age":14, "Gender":"1", "isAdmin":false, "Height":"170" ,"Weight": "55" , "Physical_Rate":"5"},
+{ "UserID":3, "name": "aviv","Type":"0"  ,"age":54, "Gender":"0", "isAdmin":false, "Height":"" ,"Weight": "" , "Physical_Rate":""},
+{ "UserID":4, "name": "boaz","Type":"0"  ,"age":32, "Gender":"1", "isAdmin":true, "Height":"" ,"Weight": "" , "Physical_Rate":""}
 ]

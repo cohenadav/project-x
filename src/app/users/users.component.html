@@ -20,6 +20,9 @@
                     <th scope="col">Name</th>
                     <th scope="col">Age</th>
                     <th scope="col">Gender</th>
+                    <th scope="col">Height (cm)</th>
+                    <th scope="col">Weight (kg)</th>
+                    <th scope="col">Physical Score (1-5)</th>
                     <th scope="col">isAdmin</th>
                   </tr>
                 </thead>
@@ -28,12 +31,18 @@
                     <th scope="row">{{user.UserID}}</th>
                     <td>{{user.name}}</td>
                     <td>{{user.age}}</td>
-                    <td>{{user.gender}}</td>
-                    <td>{{user.isAdmin}}</td>
+                    <td>{{genderCheck(user.Gender)}}</td>
+                    <td>{{user.Height}}</td>
+                    <td>{{user.Weight}}</td>
+                    <td>{{user.Physical_Rate}}</td>
+                    <td>{{isAdminCheck(user.isAdmin)}}</td>
+                    <div class="row">
+                      <a routerLink="{{user.UserID|json}}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Edit</a>
+                      <a routerLink="" class="btn btn-secondary btn-sm active" role="button" aria-pressed="true">Delete</a>
+                    </div>
                   </tr>                
-            
+                 
                 </tbody>
               </table>
-
 
 <app-buttons></app-buttons>

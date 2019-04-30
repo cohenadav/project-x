@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { typeWithParameters } from '@angular/compiler/src/render3/util';
@@ -12,7 +12,7 @@ let data: any;
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  public userData: any = data;
+   public userData: any = data;
 
   constructor(private http: HttpClient) { }
 
@@ -33,8 +33,20 @@ export class UsersComponent implements OnInit {
       .catch(e => {
         console.log(e);
       });
-
     }
+    genderCheck(v){
+      if (v == 0){
+        return "M";
+      }else return "F";
+    }
+    isAdminCheck(v){
+      if (v == true){
+        return "V";
+      }else return " ";
+    }
+
+    
   }
+  
 
 

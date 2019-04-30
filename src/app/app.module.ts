@@ -16,6 +16,7 @@ import { TableComponent } from "./table/table.component";
 import { ButtonsComponent } from "./buttons/buttons.component";
 import { UserFormComponent } from "./users/user-form/user-form.component";
 import { HttpClientModule } from "@angular/common/http";
+import { EditUserFormComponent } from './edit-user-form/edit-user-form.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { HttpClientModule } from "@angular/common/http";
     NotFoundComponent,
     TableComponent,
     ButtonsComponent,
-    UserFormComponent
+    UserFormComponent,
+    EditUserFormComponent
   ],
   imports: [
     BrowserModule,
@@ -43,13 +45,16 @@ import { HttpClientModule } from "@angular/common/http";
         path: "users/user-form",
         component: UserFormComponent
       },
+
+      {path: "users/:UserID",
+      component: EditUserFormComponent
+      },
+
       {
         path: "users",
         component: UsersComponent
       },
-      // {path: "users/:userId",
-      //component: UserComponent
-      // },
+
       {
         path: "activities",
         component: ActivitiesComponent
