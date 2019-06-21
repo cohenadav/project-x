@@ -1,23 +1,32 @@
 <table class="table table-hover">
     <thead class="thead-light">
       <tr>
-        <th scope="col">#</th>
+        <th scope="col">ID</th>
         <th scope="col">Name</th>
-        <th scope="col">Type</th>
+        <!-- <th scope="col">Type</th> -->
         <th scope="col">Duration</th>
-        <th scope="col">MIN Ramonauts</th>
-        <th scope="col">Difficulty</th>
+        <!-- <th scope="col">MIN Ramonauts</th> -->
+        <th scope="col">Physical Rate</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let activity of activityData">
         <th scope="row">{{activity.id}}</th>
         <td>{{activity.name}}</td>
-        <td>{{activity.type}}</td>
+        <!-- <td>{{activity.type}}</td> -->
         <td>{{activity.duration}}</td>
-        <td>{{activity.ramonauts}}</td>
+        <!-- <td>{{activity.ramonauts}}</td> -->
         <td>{{activity.difficulty}}</td>
+        
+        <div class="row">
+          <a routerLink="{{activity.id |json}}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Edit</a>
+          <button (click)="deleteActivity(activity.id)">Delete</button>      
+        </div>
+
       </tr>                
 
     </tbody>
   </table>
+
+  
+<button type="button" class="btn btn-outline-success" routerLink="./activity-form">Add Activity</button>

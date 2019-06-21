@@ -42,10 +42,15 @@ export class UsersComponent implements OnInit {
     isAdminCheck(v){
       if (v == true){
         return "V";
+        
       }else return " ";
     }
 
+    deleteUser(id){
+      alert("Are you sure you want to delete "+id+ "?")
     
+    }
+
   }
   
 

@@ -46,8 +46,8 @@ export class EditUserFormComponent implements OnInit {
     .then(res => {
       data = res;
       this.specificUser=data[id-1];
-      this.name = this.specificUser.name;
-      this.age = this.specificUser.age;
+      this.name = this.specificUser.Name;
+      this.age = this.specificUser.Age;
       this.type = this.specificUser.Type;
       if (this.type==0){
         this.isRamonaut= true;

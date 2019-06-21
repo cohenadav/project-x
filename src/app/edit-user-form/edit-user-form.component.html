@@ -3,7 +3,7 @@
   <div class="form-group row">
     <label for="name" class="col-sm-2 col-form-label">Name</label>
     <div class="col-sm-5">
-      <input   [(ngModel)]="name" name="Name" #Name="ngModel" (change)="onSubmit(Name)" type="text" class="form-control" placeholder="Name">
+      <input   [(ngModel)]="this.name" name="Name" #Name="ngModel" (change)="onSubmit(Name)" type="text" class="form-control" placeholder="Name">
          </div>
   </div>
   <div class="form-group row">
@@ -95,7 +95,7 @@
       </div>
     </div>
   </div>
-  <!-- <p>{{f.value | json}}</p> -->
+  <p>{{f.value | json}}</p>
   <!-- <p>{{f.value.Type}} </p> -->
   <p>{{this.specificUser|json}}</p>
 

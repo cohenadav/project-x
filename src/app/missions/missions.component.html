@@ -19,7 +19,15 @@
       <td>{{mission.sdate}}</td>
       <td>{{mission.command}}</td>
       <td>{{mission.status}}</td>
+
+      <div class="row">
+        <a routerLink="{{mission.id |json}}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Edit</a>
+        <button (click)="deleteMission(mission.id)">Delete</button>
+      </div>
+
     </tr>                
 
   </tbody>
 </table>
+
+<button type="button" class="btn btn-outline-success" routerLink="./mission-form">Add Mission</button>

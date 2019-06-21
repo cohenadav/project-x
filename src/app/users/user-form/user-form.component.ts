@@ -12,6 +12,9 @@ let data: any;
 export class UserFormComponent implements OnInit {
   public userFormData: any = data;
   public isRamonaut = true;
+  public errors = {};
+
+  // erros = { Name: 'bla bla', Paswword: 'bla bla', Gender: 'bla bla' }
   // public userData this data comes from binded on userFormComponent 
 
   // homepageData undefined
@@ -19,19 +22,15 @@ export class UserFormComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
+    //demo
+
+    this.errors['Name']
+
+    //
   }
-  onSubmit(x){
-    console.log(x)
-  }
-  submit(f){
-    console.log(f);
-  }
-  roleCheck(value){
-    if(value == 1){
-    this.isRamonaut = false;
-  }else this.isRamonaut = true;
-}
-  // onSubmit(input: HTMLInputElement){ 
+  
+  
+  // onSubmit(user){ 
   //   let post = {title: input.value};
   //   input.value = '';
 
@@ -39,6 +38,29 @@ export class UserFormComponent implements OnInit {
   //   .subscribe(res =>{ 
   //     console.log(res.json());
   //   });
-  // } 
+  // }
+
+
+  submit(user){
+    console.log(user);
+    this.http.post(`${CONFIG.BACKEND_API}/api/users/add`,user).toPromise().then(res=>{
+      this.errors = {};
+      (res as Array<any>).forEach(obj => {
+        this.errors[obj.param] = this.errors[obj.param] ? this.errors[obj.param] + " " + obj.msg : obj.msg;
+      })
+    }).catch(error => {
+      console.log(error);
+    })
+
+
+  }
+  roleCheck(value){
+    if(value == 1){
+    this.isRamonaut = false;
+  }else this.isRamonaut = true;
+}
+
+
+  
 
 }

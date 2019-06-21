@@ -17,6 +17,8 @@ import { ButtonsComponent } from "./buttons/buttons.component";
 import { UserFormComponent } from "./users/user-form/user-form.component";
 import { HttpClientModule } from "@angular/common/http";
 import { EditUserFormComponent } from './edit-user-form/edit-user-form.component';
+import { ActivityFormComponent } from './activity-form/activity-form.component';
+import { MissionFormComponent } from './mission-form/mission-form.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { EditUserFormComponent } from './edit-user-form/edit-user-form.component
     TableComponent,
     ButtonsComponent,
     UserFormComponent,
-    EditUserFormComponent
+    EditUserFormComponent,
+    ActivityFormComponent,
+    MissionFormComponent
   ],
   imports: [
     BrowserModule,
@@ -56,8 +60,17 @@ import { EditUserFormComponent } from './edit-user-form/edit-user-form.component
       },
 
       {
+        path: "activities/activity-form",
+        component: ActivityFormComponent
+      },
+
+      {
         path: "activities",
         component: ActivitiesComponent
+      },
+      {
+        path: "missions/mission-form",
+        component: MissionFormComponent
       },
       {
         path: "missions",
