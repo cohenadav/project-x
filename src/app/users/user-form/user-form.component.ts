@@ -1,6 +1,7 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import CONFIG from 'src/config/config';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 let data: any;
 
 @Injectable()
@@ -19,7 +20,7 @@ export class UserFormComponent implements OnInit {
 
   // homepageData undefined
   // homepoageData after response is defined
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
     //demo
@@ -42,10 +43,31 @@ export class UserFormComponent implements OnInit {
 
 
   submit(user){
-    console.log(user);
-    this.http.post(`${CONFIG.BACKEND_API}/api/users/add`,user).toPromise().then(res=>{
+
+    function convertUser(user) {
+      for (let key in user) {
+        if (key !== 'Name' && key !== 'Password' && key !=='PasswordMatch') {
+          if( key === 'isAdmin' || key === 'isActive') {
+            user[key] = user[key] ? 1 : 0;
+          } else {
+            user[key] = parseInt(user[key]);
+          }
+        }
+      }
+      return user;
+      // window.location.reload();
+    }
+    
+
+    this.http.post(`${CONFIG.BACKEND_API}/api/users/add`, convertUser(user)).toPromise().then(res=>{
       this.errors = {};
       (res as Array<any>).forEach(obj => {
+        if (obj.msg === 'User added') {
+          this.router.navigateByUrl('/users');
+          setTimeout(() => {
+            window.location.reload();
+          }, 50);
+        }
         this.errors[obj.param] = this.errors[obj.param] ? this.errors[obj.param] + " " + obj.msg : obj.msg;
       })
     }).catch(error => {

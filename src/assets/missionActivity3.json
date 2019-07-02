@@ -1,0 +1,6 @@
+[
+    {"MA_ID":31, "id":1, "name": "MAINTENANCE", "type":"EVA", "duration":"1.5h", "ramonauts":4, "difficulty":4 },
+    {"MA_ID":32, "id":2, "name": "Fule", "type":"EVA", "duration":"1h", "ramonauts":3, "difficulty":2 },
+    {"MA_ID":33, "id":3, "name": "PH-SETUP", "type":"EVA", "duration":"3h", "ramonauts":4, "difficulty":3 },
+    {"MA_ID":34, "id":4, "name": "PH-CHECK", "type":"EVA", "duration":"0.75h", "ramonauts":2, "difficulty":1 }   
+]

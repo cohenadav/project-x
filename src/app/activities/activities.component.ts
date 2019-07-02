@@ -21,7 +21,7 @@ export class ActivitiesComponent implements OnInit {
   }
   getData(){
     this.http
-    .get(`${CONFIG.BACKEND_API}/activities.json`)
+    .get(`${CONFIG.BACKEND_API}/api/activities/list`)
     .toPromise()
     .then(res => {
       data = res;

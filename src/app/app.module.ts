@@ -19,6 +19,11 @@ import { HttpClientModule } from "@angular/common/http";
 import { EditUserFormComponent } from './edit-user-form/edit-user-form.component';
 import { ActivityFormComponent } from './activity-form/activity-form.component';
 import { MissionFormComponent } from './mission-form/mission-form.component';
+import { MissionActivityComponent } from './mission-activity/mission-activity.component';
+import { EditActivityFormComponent } from './edit-activity-form/edit-activity-form.component';
+import { EditMissionFormComponent } from './edit-mission-form/edit-mission-form.component';
+import { SpecificMissionActivityComponent } from './specific-mission-activity/specific-mission-activity.component';
+// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -36,9 +41,14 @@ import { MissionFormComponent } from './mission-form/mission-form.component';
     UserFormComponent,
     EditUserFormComponent,
     ActivityFormComponent,
-    MissionFormComponent
+    MissionFormComponent,
+    MissionActivityComponent,
+    EditActivityFormComponent,
+    EditMissionFormComponent,
+    SpecificMissionActivityComponent
   ],
   imports: [
+    // NgbModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
@@ -64,6 +74,9 @@ import { MissionFormComponent } from './mission-form/mission-form.component';
         component: ActivityFormComponent
       },
 
+      {path: "activities/:ActivityID",
+      component: EditActivityFormComponent
+      },
       {
         path: "activities",
         component: ActivitiesComponent
@@ -72,6 +85,30 @@ import { MissionFormComponent } from './mission-form/mission-form.component';
         path: "missions/mission-form",
         component: MissionFormComponent
       },
+      {
+        path: "missions/:missionID/mission-form",
+        component: EditMissionFormComponent
+      },
+      // {
+      //   path: "missions/:missionID/:missionActivityID/missionActivity-form",
+      //   component: SpecificMissionActivityComponent
+      // },
+      // {
+      //   path: "missions/:missionID/missionActivity-form",
+      //   component: 
+      // },
+
+      {
+        path: "missions/:missionID/:missionActivityID",
+        component: SpecificMissionActivityComponent
+      },
+
+      {
+        path: "missions/:missionID",
+        component: MissionActivityComponent
+      },
+
+
       {
         path: "missions",
         component: MissionsComponent

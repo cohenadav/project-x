@@ -1,0 +1,6 @@
+[
+{ "UserID":1, "Name": "amit","Role":"Commander"  },
+{ "UserID":2, "Name": "idan","Role":"Assistant" },
+{ "UserID":3, "Name": "aviv","Role":"Science" },
+{ "UserID":4, "Name": "boaz","Role":"Communication" }
+]

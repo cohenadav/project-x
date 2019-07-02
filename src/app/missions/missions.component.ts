@@ -19,10 +19,13 @@ export class MissionsComponent implements OnInit {
       this.getData();
     }
   }
+  routhToMissionActivity(activityId){
+    
+  }
 
   getData(){
     this.http
-    .get(`${CONFIG.BACKEND_API}/missions.json`)
+    .get(`${CONFIG.BACKEND_API}/api/missions/list`)
     .toPromise()
     .then(res => {
       data = res;

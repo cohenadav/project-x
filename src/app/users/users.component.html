@@ -27,18 +27,18 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let user of userData">
-                    <th scope="row">{{user.UserID}}</th>
-                    <td>{{user.Name}}</td>
-                    <td>{{user.Age}}</td>
-                    <td>{{genderCheck(user.Gender)}}</td>
-                    <td>{{user.Height}}</td>
-                    <td>{{user.Weight}}</td>
-                    <td>{{user.Physical_Rate}}</td>
-                    <td>{{isAdminCheck(user.isAdmin)}}</td>
+                  <tr *ngFor="let USER of userData">
+                    <th scope="row">{{USER.UserID}}</th>
+                    <td>{{USER.Name}}</td>
+                    <td>{{USER.Age}}</td>
+                    <td>{{genderCheck(USER.Gender)}}</td>
+                    <td>{{USER.Height}}</td>
+                    <td>{{USER.Weight}}</td>
+                    <td>{{USER.Physical_rate}}</td>
+                    <td>{{isAdminCheck(USER.isAdmin)}}</td>
                     <div class="row">
-                      <a routerLink="{{user.UserID|json}}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Edit</a>
-                      <button (click)="deleteUser(user.Name)">Delete</button>
+                      <a routerLink="{{USER.UserID|json}}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Edit</a>
+                      <button (click)="deleteUser(user.UserID,user.Name)">Delete</button>
                       
 
                     </div>

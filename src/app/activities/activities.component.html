@@ -11,15 +11,15 @@
     </thead>
     <tbody>
       <tr *ngFor="let activity of activityData">
-        <th scope="row">{{activity.id}}</th>
-        <td>{{activity.name}}</td>
+        <th scope="row">{{activity.ActivityID}}</th>
+        <td>{{activity.Name}}</td>
         <!-- <td>{{activity.type}}</td> -->
-        <td>{{activity.duration}}</td>
+        <td>{{activity.Duration}}</td>
         <!-- <td>{{activity.ramonauts}}</td> -->
-        <td>{{activity.difficulty}}</td>
+        <td>{{activity.Physical_rate  }}</td>
         
         <div class="row">
-          <a routerLink="{{activity.id |json}}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Edit</a>
+          <a routerLink="{{activity.ActivityID |json}}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Edit</a>
           <button (click)="deleteActivity(activity.id)">Delete</button>      
         </div>
 

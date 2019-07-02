@@ -3,13 +3,13 @@
   <div class="form-group row">
     <label for="name" class="col-sm-2 col-form-label">Name</label>
     <div class="col-sm-5">
-      <input   [(ngModel)]="this.name" name="Name" #Name="ngModel" (change)="onSubmit(Name)" type="text" class="form-control" placeholder="Name">
+      <input   [(ngModel)]="this.specificUser.Name" name="Name" #Name="ngModel" (change)="onSubmit(Name)" type="text" class="form-control" placeholder="Name">
          </div>
   </div>
   <div class="form-group row">
     <label for="Age" class="col-sm-2 col-form-label">Age</label>
     <div class="col-sm-5">
-      <input [(ngModel)]="this.age" name="Age" #Age="ngModel" (change)="onSubmit(Age)"  type="text" class="form-control" placeholder="Age">
+      <input [(ngModel)]="this.specificUser.Age" name="Age" #Age="ngModel" (change)="onSubmit(Age)"  type="text" class="form-control" placeholder="Age">
     </div>
   </div>
   <fieldset class="form-group">
@@ -17,13 +17,13 @@
       <legend class="col-form-label col-sm-2 pt-0">Type</legend>
       <div class="col-sm-10">
         <div class="form-check">
-          <input (change)="roleCheck(f.value.Type)" [(ngModel)]="this.type" class="form-check-input" type="radio" name="Type" value="1">
+          <input (change)="roleCheck(f.value.Type)" [(ngModel)]="this.specificUser.Type" class="form-check-input" type="radio" name="Type" value="1">
           <label class="form-check-label" for="gridRadios1">
             Ramonaut
           </label>
         </div>
         <div class="form-check">
-          <input (change)="roleCheck(f.value.Type)" [(ngModel)]="this.type" class="form-check-input" type="radio" name="Type" value="0">
+          <input (change)="roleCheck(f.value.Type)" [(ngModel)]="this.specificUser.Type" class="form-check-input" type="radio" name="Type" value="0">
           <label class="form-check-label" for="gridRadios2">
             Control
           </label>
@@ -37,13 +37,13 @@
       <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
       <div class="col-sm-10">
         <div class="form-check">
-          <input [(ngModel)]="this.gender" class="form-check-input" type="radio" name="Gender"  value="0">
+          <input [(ngModel)]="this.specificUser.Gender" class="form-check-input" type="radio" name="Gender"  value="0">
           <label class="form-check-label" for="gridRadios3">
             Male
           </label>
         </div>
         <div class="form-check">
-          <input [(ngModel)]="this.gender" class="form-check-input" type="radio" name="Gender"  value="1">
+          <input [(ngModel)]="this.specificUser.Gender" class="form-check-input" type="radio" name="Gender"  value="1">
           <label class="form-check-label" for="gridRadios4">
             Female
           </label>
@@ -57,21 +57,21 @@
   <div class="form-group row">
       <label for="Height" class="col-sm-2 col-form-label">Height</label>
       <div class="col-sm-5">
-        <input [(ngModel)]="this.height" name="Height" #Height="ngModel" (change)="onSubmit(Height)" type="text" class="form-control" placeholder="Height">
+        <input [(ngModel)]="this.specificUser.Height" name="Height" #Height="ngModel" (change)="onSubmit(Height)" type="text" class="form-control" placeholder="Height">
            </div>
     </div>
 
     <div class="form-group row">
         <label for="Weight" class="col-sm-2 col-form-label">Weight</label>
         <div class="col-sm-5">
-          <input [(ngModel)]="this.weight" name="Weight" #Weight="ngModel" (change)="onSubmit(Weight)" type="text" class="form-control" placeholder="Weight">
+          <input [(ngModel)]="this.specificUser.Weight" name="Weight" #Weight="ngModel" (change)="onSubmit(Weight)" type="text" class="form-control" placeholder="Weight">
              </div>
       </div>
 
       <div class="row">
           <legend class="col-form-label col-sm-2 pt-2">Physical Rate</legend>
           <div class="col-auto my-1">
-            <select [(ngModel)]="this.physical" name="Physical_rate" class="custom-select mr-sm-2" >
+            <select [(ngModel)]="this.specificUser.Physical_rate" name="Phisical_rate" class="custom-select mr-sm-2" >
               
               <option value="1">1</option>
               <option value="2">2</option>
@@ -88,16 +88,29 @@
     <div class="col-sm-2"></div>
     <div class="col-sm-10">
       <div class="form-check">
-        <input class="form-check-input" [(ngModel)]="isAdmin" name="isAdmin" type="checkbox" id="isAdmin">
+        <input class="form-check-input" [(ngModel)]="this.specificUser.isAdmin" name="isAdmin" type="checkbox" id="isAdmin">
         <label class="form-check-label" for="isAdmin">
           is Admin?
         </label>
       </div>
     </div>
   </div>
+  <div class="form-group row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-10">
+      <div class="form-check">
+        <input class="form-check-input" [(ngModel)]="this.specificUser.Active" name="Active" type="checkbox" id="Active" >
+        <label class="form-check-label" for="Active">
+          is Active?
+        </label>
+      </div>
+    </div>
+  </div>
+  
   <p>{{f.value | json}}</p>
   <!-- <p>{{f.value.Type}} </p> -->
   <p>{{this.specificUser|json}}</p>
+  <p>{{this.usersData|json}}</p>
 
   <div class="form-group row">
     <div class="col-sm-10">

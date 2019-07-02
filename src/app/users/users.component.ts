@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { typeWithParameters } from '@angular/compiler/src/render3/util';
 import CONFIG from 'src/config/config';
+import { Router } from '@angular/router';
 let data: any;
 
 @Injectable()
@@ -14,7 +15,7 @@ let data: any;
 export class UsersComponent implements OnInit {
    public userData: any = data;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private router: Router) { }
 
   ngOnInit() {
     if (!this.userData) {
@@ -24,7 +25,7 @@ export class UsersComponent implements OnInit {
     }
     getData(){
       this.http
-      .get(`${CONFIG.BACKEND_API}/users.json`)
+      .get(`${CONFIG.BACKEND_API}/api/users/list`)
       .toPromise()
       .then(res => {
         data = res;
@@ -46,9 +47,18 @@ export class UsersComponent implements OnInit {
       }else return " ";
     }
 
-    deleteUser(id){
-      alert("Are you sure you want to delete "+id+ "?")
-    
+    deleteUser(id,name){
+      if(confirm("Are you sure you want to delete "+name+ "?")){
+        this.http
+        .get(`${CONFIG.BACKEND_API}/api/users/delete/?id=${id}`)
+        .toPromise()
+        .then(res => {
+        })
+     
+          window.location.reload();
+          // this.router.navigateByUrl('/users'); 
+      }
+          
     }
 
   }

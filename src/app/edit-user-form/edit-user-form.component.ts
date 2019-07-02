@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import CONFIG from 'src/config/config';
 import { Type } from '@angular/compiler';
+import { Router } from '@angular/router';
 let data: any;
 
 @Injectable()
@@ -13,8 +14,8 @@ let data: any;
 })
 export class EditUserFormComponent implements OnInit {
   
-  
-  public specificUser: any = data;
+  public errors = {};
+  private usersData: any = data;
   private age;
   private type; 
   private gender;
@@ -24,8 +25,13 @@ export class EditUserFormComponent implements OnInit {
   private physical;
   private isAdmin;
   private isRamonaut;
+  private specificUser : any;
+  public index;
+  public userId;
   
-  constructor(private http: HttpClient, private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute,private router: Router) {
+    this.specificUser = {};
+   }
     
     
   ngOnInit() {
@@ -34,29 +40,43 @@ export class EditUserFormComponent implements OnInit {
       console.log(params.get('UserID'));
       let id =+params.get('UserID')
       this.getData(id);
+      console.log(id)
           })
           
 
   }
 
-  getData(id){
+
+  private getData(id){
     this.http
-    .get(`${CONFIG.BACKEND_API}/users.json`)
+    .get(`${CONFIG.BACKEND_API}/api/users/list`)
     .toPromise()
     .then(res => {
       data = res;
-      this.specificUser=data[id-1];
-      this.name = this.specificUser.Name;
-      this.age = this.specificUser.Age;
-      this.type = this.specificUser.Type;
-      if (this.type==0){
-        this.isRamonaut= true;
-      }else {this.isRamonaut=false;}
-      this.isAdmin = this.specificUser.isAdmin;
-      this.gender = this.specificUser.Gender;
-      this.weight = this.specificUser.Weight;
-      this.height = this.specificUser.Height;
-      this.physical = this.specificUser.Physical_Rate
+      console.log(data);
+      this.usersData=data;
+      this.userId = id;
+      this.index = this.getUser(id);
+      console.log(this.index);
+      this.specificUser = data[this.index];
+      this.specificUser.Gender = this.specificUser.Gender.toString();
+      this.specificUser.Type = this.specificUser.Type.toString();
+      this.specificUser.Height = this.specificUser.Height.toString();
+      
+      if(this.specificUser.isAdmin == 1){
+          this.specificUser.isAdmin = true;
+      }else{
+          this.specificUser.isAdmin = false;
+        }
+      //   if(this.specificUser.Active == 1){
+      //     this.specificUser.Active = true;
+      // }else{
+      //     this.specificUser.Active = false;
+      //   }
+          
+      this.specificUser.Phisical_rate = this.specificUser.Phisical_rate.toString();
+      
+      console.log(this.specificUser)
 
       
     })
@@ -70,5 +90,49 @@ export class EditUserFormComponent implements OnInit {
     this.isRamonaut = false;
   }else this.isRamonaut = true;
 }
+  private getUser(id){
+    for(var i = 0; i<this.usersData.length; i++){
+      if(this.usersData[i].UserID === id){
+        return i;
+    }
+  
+  }
+  }
 
+  submit(user){
+
+    function convertUser(user) {
+      for (let key in user) {
+        if (key !== 'Name' && key !== 'Password' && key !=='PasswordMatch' && key !=='UserID' ) {
+          if( key === 'isAdmin' || key === 'Active') {
+            user[key] = user[key] ? 1 : 0;
+          } else {
+            user[key] = parseInt(user[key]);
+          }
+        }
+      }
+      return user;
+      // window.location.reload();
+    }
+    
+    user.UserID = this.userId;
+    console.log(this.usersData)
+    this.http.post(`${CONFIG.BACKEND_API}/api/users/edit`, convertUser(user)).toPromise().then(res=>{
+      this.errors = {};
+      console.log(this.usersData);
+      (res as Array<any>).forEach(obj => {
+        if (obj.msg == 'UserID:'+this.userId +'- changed successfully.') {
+          this.router.navigateByUrl('/users');
+          setTimeout(() => {
+            // window.location.reload();
+          }, 50);
+        }
+        this.errors[obj.param] = this.errors[obj.param] ? this.errors[obj.param] + " " + obj.msg : obj.msg;
+      })
+    }).catch(error => {
+      console.log(error);
+    })
+
+
+  }
 }

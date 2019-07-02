@@ -1,0 +1,62 @@
+
+
+<p style="font-size:50px;text-align:center;">"{{this.missionData}}"</p>
+
+<p style="font-size:25px;padding: 20px">Users</p>
+<table class="table table-hover">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Role</th>
+    </tr>
+  </thead>
+ 
+  <tbody>
+    <tr *ngFor="let user of missionUsers">
+      <th scope="row">{{user.UserID}}</th>
+      <td>{{user.Name}}</td>
+      <td>{{user.Role}}</td>
+    </tr>                
+
+  </tbody>
+</table>
+
+
+<button type="button" class="btn btn-outline-success" routerLink="./mission-form">Edit Mission</button>
+
+
+
+<p style="font-size:25px;padding: 20px">Activities</p>
+<table class="table table-hover">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Duration</th>
+      <th scope="col">Physical Rate</th>
+    </tr>
+  </thead>
+ 
+  <tbody>
+    <tr *ngFor="let activity of missionActivities">
+      <th scope="row">{{activity.id}}</th>
+      <td>{{activity.name}}</td>
+      <!-- <td>{{activity.type}}</td> -->
+      <td>{{activity.duration}}</td>
+      <!-- <td>{{activity.ramonauts}}</td> -->
+      <td>{{activity.difficulty}}</td>
+      
+      <div class="row">
+        <a routerLink="./{{activity.MA_ID |json}}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Edit</a>
+        <button (click)="deleteActivity(activity.id)">Delete</button>      
+      </div>
+
+    </tr>                
+
+  </tbody>
+</table>
+
+
+<button type="button" class="btn btn-outline-success" routerLink="./activity-form">Add Activity</button>
+

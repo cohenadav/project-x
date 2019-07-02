@@ -4,7 +4,7 @@
   
       <label for="name" class="col-sm-2 col-form-label">Mission Name</label>
       <div class="col-sm-5">
-        <input required minlength="3" maxlength="30"  ngModel name="Name" #Name="ngModel" type="text" [ngClass]="{'invalid': errors.Name, 'second': true, 'third': false}" class="form-control" placeholder="Name">
+        <input required minlength="5" maxlength="14"  ngModel name="Name" #Name="ngModel" type="text" [ngClass]="{'invalid': errors.Name, 'second': true, 'third': false}" class="form-control" placeholder="Name">
          <div  class="alert alert-danger" *ngIf="errors.Name">{{errors.Name}} </div>  
       </div>
     </div>
@@ -18,25 +18,53 @@
     
   
     <div class="form-group row">
-      <label for="Duration" class="col-sm-2 col-form-label">Duration</label>
+      <label for="Start_date" class="col-sm-2 col-form-label">Start Date</label>
       <div class="col-sm-5">
-        <input required minlength="1" maxlength="4" ngModel name="Duration" #Duration="ngModel"  type="text" class="form-control" placeholder="Duration (hours)">
-        <div class="alert alert-danger" *ngIf="!Duration.valid && Duration.touched">Please enter a valid Duration</div>
+        <input required ngModel name="Start_date" #v="ngModel"  type="date" class="form-control" >
+        <!-- <div class="alert alert-danger" *ngIf="!Start_date.valid && Start_date.touched">Please enter a valid Start Date</div> -->
         <!-- <div class="alert alert-danger" *ngIf="Age.errors.minlength">Age must be 2 digits.</div> -->
       </div>
     </div>
+
+    <div class="form-group row">
+      <label for="End_date" class="col-sm-2 col-form-label">End Date</label>
+      <div class="col-sm-5">
+        <input required ngModel name="End_date" #End_date="ngModel"  type="date" class="form-control" >
+        <!-- <div class="alert alert-danger" *ngIf="!End_date.valid && End_date.touched">Please enter a valid End Date</div> -->
+        <!-- <div class="alert alert-danger" *ngIf="Age.errors.minlength">Age must be 2 digits.</div> -->
+      </div>
+    </div>
+
+
+    
+    <!-- <fieldset class="form-group">
+
+      <form class="form-inline">
+        <div class="form-group">
+          <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd"
+                  name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+            </div>
+          </div>
+        </div>
+      </form>
+      
+      <hr/>
+      <pre>Model: {{ model | json }}</pre>
   
-  
-  
+
+  </fieldset>
+   -->
   
     
     <fieldset class="form-group">
   
         <div class="row">
-            <legend class="col-form-label col-sm-2 pt-2">Physical Rate</legend>
+            <legend class="col-form-label col-sm-2 pt-2">Status</legend>
             <div class="col-auto my-1">
-              <select ngModel name="Physical_rate" class="custom-select mr-sm-2" id="Physical_rate">
-                <!-- <option selected>Choose...</option> -->
+              <select ngModel name="status" class="custom-select mr-sm-2" id="status">
                 <option value="1">Scheduled</option>
                 <option value="2">In process</option>
                 <option value="3">Finished</option>
@@ -44,6 +72,41 @@
             </div>
           </div>
   
+  </fieldset>
+
+  <fieldset class="form-group">
+  
+      <div class="row">
+
+         
+       <legend class="col-form-label col-sm-2 pt-2">Users</legend>
+          
+              <div class="col-sm-6">
+                
+                  <!-- <input type="text" [(ngModel)]="usersRoles[number]" name="word{{in}}" class="form-control"> -->
+                
+                  <div *ngFor="let number of numberOfRoles; let in=index">
+                      <div class="row">
+                        
+                      <label for="user{{number}}.Role" class="col-sm-2 col-form-label">User{{number+1}} Role:</label>
+                      <select [(ngModel)]="usersRoles[in].Role"  name="user{{number}}.Role" class="col-sm-3" id="Role">
+                          <option *ngFor="let role of roles" [value]="role">
+                            {{role}}
+                          </option>
+                      </select>
+                      <label for="user{{number}}.UserID" class="col-sm-2 col-form-label"> User{{number+1}} Name:</label>
+                      <select [(ngModel)]="usersRoles[in].UserID" name="user{{number}}.UserID" class="col-sm-3" id="user">
+                          <option *ngFor="let user of allUsers" [value]="user.UserID">
+                            {{user.Name}}
+                          </option>
+                      </select>
+                  </div>
+                </div>
+              </div>
+              {{this.usersRoles | json }}
+         
+        </div>
+
   </fieldset>
   
   
@@ -55,5 +118,6 @@
         <button type="submit" class="btn btn-primary"  >Submmit</button>
       </div>
     </div>
+
     
   </form>
