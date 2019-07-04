@@ -1,6 +1,4 @@
-
-
-<p style="font-size:50px;text-align:center;">"{{this.missionData}}"</p>
+<p style="font-size:50px;text-align:center;">"{{this.specificMission.Name}}"</p>
 
 <p style="font-size:25px;padding: 20px">Users</p>
 <table class="table table-hover">
@@ -11,19 +9,19 @@
       <th scope="col">Role</th>
     </tr>
   </thead>
- 
+
   <tbody>
     <tr *ngFor="let user of missionUsers">
       <th scope="row">{{user.UserID}}</th>
       <td>{{user.Name}}</td>
       <td>{{user.Role}}</td>
-    </tr>                
+    </tr>
 
   </tbody>
 </table>
 
 
-<button type="button" class="btn btn-outline-success" routerLink="./mission-form">Edit Mission</button>
+<!-- <button type="button" class="btn btn-outline-success" routerLink="./mission-form">Edit Users</button> -->
 
 
 
@@ -33,30 +31,31 @@
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Name</th>
-      <th scope="col">Duration</th>
+      <th scope="col">Start Date</th>
+      <th scope="col">End Date</th>
       <th scope="col">Physical Rate</th>
     </tr>
   </thead>
- 
+
   <tbody>
     <tr *ngFor="let activity of missionActivities">
-      <th scope="row">{{activity.id}}</th>
-      <td>{{activity.name}}</td>
-      <!-- <td>{{activity.type}}</td> -->
-      <td>{{activity.duration}}</td>
+      <th scope="row">{{activity.ActivityID}}</th>
+      <td>{{activity.Name}}</td>
+      <td>{{activity.Start_Date}}</td>
+      <td>{{activity.End_Date}}</td>
       <!-- <td>{{activity.ramonauts}}</td> -->
-      <td>{{activity.difficulty}}</td>
-      
+      <td>{{activity.Physical_rate}}</td>
+
       <div class="row">
-        <a routerLink="./{{activity.MA_ID |json}}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Edit</a>
-        <button (click)="deleteActivity(activity.id)">Delete</button>      
+        <a routerLink="./Report/{{this.activity.MA_ID |json}}" class="btn btn-primary btn-sm active" role="button"
+          aria-pressed="true">Report Done</a>
+        <!-- <button (click)="deleteActivity(activity.id)">Delete</button> -->
       </div>
 
-    </tr>                
+    </tr>
 
   </tbody>
 </table>
 
 
-<button type="button" class="btn btn-outline-success" routerLink="./activity-form">Add Activity</button>
-
+<button type="button" class="btn btn-outline-success" routerLink="./add-Activity">Add Activity</button>

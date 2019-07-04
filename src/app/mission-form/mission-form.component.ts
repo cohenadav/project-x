@@ -3,6 +3,7 @@ import CONFIG from 'src/config/config';
 import { HttpClient } from '@angular/common/http';
 import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 import { BodyComponent } from '../body/body.component';
+import { Router } from '@angular/router';
 let data: any;
 
 @Injectable()
@@ -16,7 +17,7 @@ export class MissionFormComponent implements OnInit {
   public errors = {};
   public matDatepicker;
   public numberOfRoles = [0,1,2,3,4];
-  public roles = ['commander', 'agent', 'sucker', 'fucker'];
+  public roles = ['Commander','Deputy Commander','Communication officer','Science officer'];
   public allUsers;
   
 
@@ -28,7 +29,7 @@ export class MissionFormComponent implements OnInit {
   
   public usersRoles = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private router: Router) {
 
     this.UMR1 = {
       UserID: "",
@@ -95,11 +96,14 @@ export class MissionFormComponent implements OnInit {
     mission.Users = convertUserID(this.usersRoles);
 
     // mission.Users = this.usersRoles;  
-    this.http.post(`${CONFIG.BACKEND_API}/api/missions/add`,mission).toPromise().then(res=>{
+    this.http.post(`${CONFIG.BACKEND_API}/api/missions/add`,mission).toPromise().then((res: {msg: string} )=>{
       this.errors = {};
-      (res as Array<any>).forEach(obj => {
-        this.errors[obj.param] = this.errors[obj.param] ? this.errors[obj.param] + " " + obj.msg : obj.msg;
-      })
+      if (res.msg === 'Added') {
+        this.router.navigateByUrl('/missions');
+        setTimeout(() => {
+          window.location.reload();
+        }, 50);
+      }
     }).catch(error => {
       console.log(error);
     })

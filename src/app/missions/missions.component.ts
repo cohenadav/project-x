@@ -1,6 +1,7 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import CONFIG from 'src/config/config';
 import { HttpClient } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 let data: any;
 
 @Injectable()
@@ -12,7 +13,7 @@ let data: any;
 export class MissionsComponent implements OnInit {
   public missionData: any = data;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public datepipe: DatePipe) { }
 
   ngOnInit() {
     if (!this.missionData) {
@@ -30,6 +31,11 @@ export class MissionsComponent implements OnInit {
     .then(res => {
       data = res;
       this.missionData=data
+      this.missionData.forEach(item => {
+        item.Start_date =this.datepipe.transform(item.Start_date, 'yyyy-MM-dd');
+        item.End_date =this.datepipe.transform(item.End_date, 'yyyy-MM-dd');
+        
+      });
     })
     .catch(e => {
       console.log(e);

@@ -54,6 +54,7 @@ export class UserFormComponent implements OnInit {
           }
         }
       }
+      user.Active = 1;
       return user;
       // window.location.reload();
     }

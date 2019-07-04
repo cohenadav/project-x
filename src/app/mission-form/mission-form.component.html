@@ -20,7 +20,7 @@
     <div class="form-group row">
       <label for="Start_date" class="col-sm-2 col-form-label">Start Date</label>
       <div class="col-sm-5">
-        <input required ngModel name="Start_date" #v="ngModel"  type="date" class="form-control" >
+        <input required ngModel name="Start_date" #Start_date="ngModel"  type="date" class="form-control" >
         <!-- <div class="alert alert-danger" *ngIf="!Start_date.valid && Start_date.touched">Please enter a valid Start Date</div> -->
         <!-- <div class="alert alert-danger" *ngIf="Age.errors.minlength">Age must be 2 digits.</div> -->
       </div>
@@ -111,7 +111,7 @@
   
   
     <p>{{f.value | json}}</p>
-    <p>{{f.value.Type}} </p>
+  
   
     <div class="form-group row">
       <div class="col-sm-10">

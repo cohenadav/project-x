@@ -23,6 +23,8 @@ import { MissionActivityComponent } from './mission-activity/mission-activity.co
 import { EditActivityFormComponent } from './edit-activity-form/edit-activity-form.component';
 import { EditMissionFormComponent } from './edit-mission-form/edit-mission-form.component';
 import { SpecificMissionActivityComponent } from './specific-mission-activity/specific-mission-activity.component';
+import { DatePipe } from '@angular/common';
+import { ReportEndOfActComponent } from './report-end-of-act/report-end-of-act.component'
 // import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -45,7 +47,8 @@ import { SpecificMissionActivityComponent } from './specific-mission-activity/sp
     MissionActivityComponent,
     EditActivityFormComponent,
     EditMissionFormComponent,
-    SpecificMissionActivityComponent
+    SpecificMissionActivityComponent,
+    ReportEndOfActComponent
   ],
   imports: [
     // NgbModule,
@@ -82,6 +85,10 @@ import { SpecificMissionActivityComponent } from './specific-mission-activity/sp
         component: ActivitiesComponent
       },
       {
+        path: "missions/:missionID/Report/:MA_ID",
+        component: ReportEndOfActComponent
+      },
+      {
         path: "missions/mission-form",
         component: MissionFormComponent
       },
@@ -98,8 +105,9 @@ import { SpecificMissionActivityComponent } from './specific-mission-activity/sp
       //   component: 
       // },
 
+
       {
-        path: "missions/:missionID/:missionActivityID",
+        path: "missions/:missionID/add-Activity",
         component: SpecificMissionActivityComponent
       },
 
@@ -120,7 +128,7 @@ import { SpecificMissionActivityComponent } from './specific-mission-activity/sp
       }
     ])
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

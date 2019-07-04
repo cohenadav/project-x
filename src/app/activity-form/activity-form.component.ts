@@ -34,19 +34,18 @@ export class ActivityFormComponent implements OnInit {
 
 
     console.log(activity);
-    this.http.post(`${CONFIG.BACKEND_API}/api/activities/add`, convertActivity(activity)).toPromise().then(res=>{
+    this.http.post(`${CONFIG.BACKEND_API}/api/activities/add`, convertActivity(activity)).toPromise().then((res: {msg: string}) => {
+      // res === 'added'
+      // res : { error: '....' }
       this.errors = {};
-      console.log(res.toString());
-      (res as Array<any>).forEach(obj => {
-        
-        if (obj.error.text == "Added") {
+      // console.log(res.toString());        
+        if (res.msg === 'Added') {
           this.router.navigateByUrl('/activities');
           setTimeout(() => {
             window.location.reload();
-          }, 1300);
+          }, 50);
         }
-        this.errors[obj.param] = this.errors[obj.param] ? this.errors[obj.param] + " " + obj.msg : obj.msg;
-      })
+
     }).catch(error => {
       console.log(error);
     })

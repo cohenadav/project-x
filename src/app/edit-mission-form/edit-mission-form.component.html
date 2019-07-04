@@ -1,38 +1,44 @@
 
-<p style="font-size:50px;text-align:center;" > this is edit mission form </p>
+
 <form #f="ngForm" (ngSubmit) ="submit(f.value)">
 
   <div class="form-group row">
 
     <label for="name" class="col-sm-2 col-form-label">Mission Name</label>
     <div class="col-sm-5">
-      <input required minlength="3" maxlength="30"  [(ngModel)]="this.specificMission.name" name="name" #name="ngModel" type="text" class="form-control" placeholder="Name">
-       <div  class="alert alert-danger" *ngIf="errors.Name">{{errors.Name}} </div>  
+      <input required minlength="3" maxlength="30"  [(ngModel)]="this.Mission.Name" name="Name" #Name="ngModel" type="text" class="form-control" placeholder="Name">
+       <!-- <div  class="alert alert-danger" *ngIf="errors.Name">{{errors.Name}} </div>   -->
     </div>
   </div>
 
-  
 
   <div class="form-group row">
-    <label for="Duration" [(ngModel)]="this.specificMission.duration" name="Duration" #Duration="ngModel"  type="text" class="form-control" placeholder="Duration (hours)" class="col-sm-2 col-form-label">Duration</label>
+    <label for="Start_date" class="col-sm-2 col-form-label">Start Date</label>
     <div class="col-sm-5">
-      <input required minlength="1" maxlength="4" ngModel name="Duration" #Duration="ngModel"  type="text" class="form-control" placeholder="Duration (hours)">
-      <div class="alert alert-danger" *ngIf="!Duration.valid && Duration.touched">Please enter a valid Duration</div>
-      <!-- <div class="alert alert-danger" *ngIf="Age.errors.minlength">Age must be 2 digits.</div> -->
+      <input required [(ngModel)]="this.Mission.Start_date" name="Start_date" #Start_date="ngModel"  type="date" class="form-control" >
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="End_date" class="col-sm-2 col-form-label">End Date</label>
+    <div class="col-sm-5">
+      <input required [(ngModel)]="this.Mission.End_date" name="End_date" #End_date="ngModel"  type="date" class="form-control" >
     </div>
   </div>
 
 
 
 
+
+
   
-  <fieldset class="form-group">
+  <!-- <fieldset class="form-group">
 
       <div class="row">
-          <legend class="col-form-label col-sm-2 pt-2">Physical Rate</legend>
+          <legend class="col-form-label col-sm-2 pt-2">Status</legend>
           <div class="col-auto my-1">
-            <select ngModel name="Physical_rate" class="custom-select mr-sm-2" id="Physical_rate">
-              <!-- <option selected>Choose...</option> -->
+            <select ngModel name="this.Mission.Status" class="custom-select mr-sm-2" id="Status">
+              <option value="0">Canceled</option>
               <option value="1">Scheduled</option>
               <option value="2">In process</option>
               <option value="3">Finished</option>
@@ -40,10 +46,10 @@
           </div>
         </div>
 
-</fieldset>
+</fieldset> -->
 
   <p>{{f.value | json}}</p>
-  <p>{{f.value.Type}} </p>
+  <p>{{this.Mission | json}} </p>
 
   <div class="form-group row">
     <div class="col-sm-10">
