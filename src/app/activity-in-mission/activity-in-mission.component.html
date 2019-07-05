@@ -1,0 +1,33 @@
+<p>
+  activity-in-mission works!
+</p>
+<h1 style="text-align:center;" >Activity "{{this.specificMissionActivity.Name}}"</h1>
+
+<p style="font-size:30;text-align:center;">Mission "{{this.specificMission.Name}}"</p>
+<!--  <p style="font-size:50px;text-align:center;">Activity "{{this.specificMissionActivity.Name}}" </p> -->
+
+<h3  style="font-size:20px;padding: 20px">Start Date:    {{this.specificMissionActivity.Start_Date}}</h3>
+<h3  style="font-size:20px;padding: 20px">End Date:    {{this.specificMissionActivity.End_Date }}</h3>
+<h3 style="font-size:20px;padding: 20px">Physical Rate: {{this.specificMissionActivity.Physical_rate}}</h3>
+
+
+
+<h3 style="font-size:25px;padding: 20px">Users</h3>
+<table class="table table-hover">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Role</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let user of mAUsers">
+      <th scope="row">{{user.UserID}}</th>
+      <td>{{user.Name}}</td>
+      <td>{{user.Role}}</td>
+    </tr>
+
+  </tbody>
+</table>

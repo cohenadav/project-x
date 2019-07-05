@@ -24,7 +24,13 @@ import { EditActivityFormComponent } from './edit-activity-form/edit-activity-fo
 import { EditMissionFormComponent } from './edit-mission-form/edit-mission-form.component';
 import { SpecificMissionActivityComponent } from './specific-mission-activity/specific-mission-activity.component';
 import { DatePipe } from '@angular/common';
-import { ReportEndOfActComponent } from './report-end-of-act/report-end-of-act.component'
+import { ReportEndOfActComponent } from './report-end-of-act/report-end-of-act.component';
+import { ActivityInMissionComponent } from './activity-in-mission/activity-in-mission.component'
+import { LoginComponent } from './login/login.component';
+import { MyMissionsComponent } from './my-missions/my-missions.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import { PersonalInfoComponent } from './personal-info/personal-info.component';
+import {AuthGuardService} from './auth.service';
 // import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -48,53 +54,87 @@ import { ReportEndOfActComponent } from './report-end-of-act/report-end-of-act.c
     EditActivityFormComponent,
     EditMissionFormComponent,
     SpecificMissionActivityComponent,
-    ReportEndOfActComponent
+    ReportEndOfActComponent,
+    ActivityInMissionComponent,
+    LoginComponent,
+    MyMissionsComponent,
+    PersonalInfoComponent
   ],
   imports: [
     // NgbModule,
+    ReactiveFormsModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: "", component: HomeComponent },
+      { path: "", component: HomeComponent, canActivate:[AuthGuardService] },
+      {
+        path: "my-missions",
+        component: MyMissionsComponent,
+        canActivate:[AuthGuardService]
+      },
+      {
+        path: "login",
+        component: LoginComponent
+      },
       {
         path: "users/user-form",
-        component: UserFormComponent
+        component: UserFormComponent,
+        canActivate:[AuthGuardService]
       },
 
       {path: "users/:UserID",
-      component: EditUserFormComponent
+      component: EditUserFormComponent,
+      canActivate:[AuthGuardService]
       },
 
       {
         path: "users",
-        component: UsersComponent
+        component: UsersComponent,
+        canActivate:[AuthGuardService]
       },
 
       {
         path: "activities/activity-form",
-        component: ActivityFormComponent
+        component: ActivityFormComponent,
+        canActivate:[AuthGuardService]
       },
 
       {path: "activities/:ActivityID",
-      component: EditActivityFormComponent
+      component: EditActivityFormComponent,
+      canActivate:[AuthGuardService]
       },
       {
         path: "activities",
-        component: ActivitiesComponent
+        component: ActivitiesComponent,
+        canActivate:[AuthGuardService]
+      },
+      {
+        path: "missions/:missionID/add-Activity",
+        component: SpecificMissionActivityComponent,
+        canActivate:[AuthGuardService]
+      },
+      {
+        path: "missions/:missionID/:MA_ID",
+        component: ActivityInMissionComponent,
+        canActivate:[AuthGuardService]
       },
       {
         path: "missions/:missionID/Report/:MA_ID",
-        component: ReportEndOfActComponent
+        component: ReportEndOfActComponent,
+        canActivate:[AuthGuardService]
       },
       {
         path: "missions/mission-form",
-        component: MissionFormComponent
+        component: MissionFormComponent,
+        canActivate:[AuthGuardService]
       },
+
       {
         path: "missions/:missionID/mission-form",
-        component: EditMissionFormComponent
+        component: EditMissionFormComponent,
+        canActivate:[AuthGuardService]
       },
       // {
       //   path: "missions/:missionID/:missionActivityID/missionActivity-form",
@@ -106,29 +146,29 @@ import { ReportEndOfActComponent } from './report-end-of-act/report-end-of-act.c
       // },
 
 
-      {
-        path: "missions/:missionID/add-Activity",
-        component: SpecificMissionActivityComponent
-      },
+
 
       {
         path: "missions/:missionID",
-        component: MissionActivityComponent
+        component: MissionActivityComponent,
+        canActivate:[AuthGuardService]
       },
 
 
       {
         path: "missions",
-        component: MissionsComponent
+        component: MissionsComponent,
+        canActivate:[AuthGuardService]
       },
 
       {
         path: "**",
-        component: NotFoundComponent
+        component: NotFoundComponent,
+        canActivate:[AuthGuardService]
       }
     ])
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

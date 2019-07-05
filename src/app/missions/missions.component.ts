@@ -32,8 +32,8 @@ export class MissionsComponent implements OnInit {
       data = res;
       this.missionData=data
       this.missionData.forEach(item => {
-        item.Start_date =this.datepipe.transform(item.Start_date, 'yyyy-MM-dd');
-        item.End_date =this.datepipe.transform(item.End_date, 'yyyy-MM-dd');
+        item.Start_date =this.datepipe.transform(item.Start_date, 'dd-MM-yyyy');
+        item.End_date =this.datepipe.transform(item.End_date, 'dd-MM-yyyy');
         
       });
     })

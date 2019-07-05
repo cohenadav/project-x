@@ -1,4 +1,6 @@
-<p style="font-size:50px;text-align:center;">"{{this.specificMission.Name}}"</p>
+<p style="font-size:50px;text-align:center;">Mission   "{{this.specificMission.Name}}"</p>
+<p style="text-align:center;">Dates: {{this.specificMission.Start_date }} to {{this.specificMission.End_date }}</p>
+
 
 <p style="font-size:25px;padding: 20px">Users</p>
 <table class="table table-hover">
@@ -38,7 +40,7 @@
   </thead>
 
   <tbody>
-    <tr *ngFor="let activity of missionActivities">
+    <tr *ngFor="let activity of missionActivities" routerLink="{{activity.MA_ID |json}}">
       <th scope="row">{{activity.ActivityID}}</th>
       <td>{{activity.Name}}</td>
       <td>{{activity.Start_Date}}</td>
