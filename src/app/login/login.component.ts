@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
     this.http.
-      post(`${CONFIG.BACKEND_API}/api/user/login`, this.loginForm.getRawValue() ).toPromise()
+      post(`${CONFIG.BACKEND_API}/api/user/login`, this.loginForm.getRawValue(), {withCredentials: true} ).toPromise()
     .then(res => {
       localStorage.setItem('user', JSON.stringify(res));
     })
