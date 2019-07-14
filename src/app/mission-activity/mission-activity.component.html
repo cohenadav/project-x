@@ -34,8 +34,11 @@
       <th scope="col">ID</th>
       <th scope="col">Name</th>
       <th scope="col">Start Date</th>
+      <th scope="col">Start Time</th>
       <th scope="col">End Date</th>
+      <th scope="col">End Time</th>
       <th scope="col">Physical Rate</th>
+      <th scope="col">Status</th>
     </tr>
   </thead>
 
@@ -44,20 +47,27 @@
       <th scope="row">{{activity.ActivityID}}</th>
       <td>{{activity.Name}}</td>
       <td>{{activity.Start_Date}}</td>
+      <td>{{activity.Start_time}}</td>
       <td>{{activity.End_Date}}</td>
-      <!-- <td>{{activity.ramonauts}}</td> -->
+      <td>{{activity.End_time}}</td>
       <td>{{activity.Physical_rate}}</td>
+      <td>{{activity.status}}</td>
 
-      <div class="row">
-        <a routerLink="./Report/{{this.activity.MA_ID |json}}" class="btn btn-primary btn-sm active" role="button"
+      <div  class="row">
+        <a *ngIf="activity.Status === 0 || activity.Status ===1" routerLink="./Report/{{this.activity.MA_ID |json}}" class="btn btn-primary btn-sm active" role="button"
           aria-pressed="true">Report Done</a>
         <!-- <button (click)="deleteActivity(activity.id)">Delete</button> -->
+        
       </div>
 
     </tr>
-
+    <!-- <p>{{specificMission.Status}}</p> -->
   </tbody>
 </table>
 
 
 <button type="button" class="btn btn-outline-success" routerLink="./add-Activity">Add Activity</button>
+ <br>
+<div class="text-right" *ngIf="isActivitesFinished()">
+    <button style="padding-inline: 200px" type="button" class="btn btn-primary" (click)="generateReport()">Generate Mission Report</button>
+</div>

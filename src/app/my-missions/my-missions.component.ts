@@ -18,41 +18,40 @@ export class MyMissionsComponent implements OnInit {
   public userAllMissionsID;
   public missions;
   public allMissionDB;
+  public loginUser;
+  public user;
+  
 
   constructor(private http: HttpClient,private route: ActivatedRoute, public datepipe: DatePipe) {
     this.userAllMissionsID = [];
     this.missions = [];
     this.allMissionDB = [];
+    this.user = {};
 
    }
 
   ngOnInit() {
-    this.route.paramMap
-    .subscribe(params => {
-      console.log(params.get('loginID'));
-      let id = +params.get('loginID')
-      this.loginId = id;
-  })
+    // this.route.paramMap
+    // .subscribe(params => {
+    //   console.log(params.get('loginID'));
+    //   let id = +params.get('loginID')
+    // })
+    this.loginUser = JSON.parse(localStorage.getItem('user'));
+      this.loginId = this.loginUser.UserID;
+ 
   this.getMyMissions(this.loginId);
   this.getAllMissions();
+  this.getUserName();
 }
 
 getMyMissions(id){
     this.http
-    .get(`${CONFIG.BACKEND_API}/api/users/list-user-missions?id=15`) //${id}
+    .get(`${CONFIG.BACKEND_API}/api/users/list-user-missions?id=${id}`) //${id}
     .toPromise()
     .then(res => { // [{"MissionID": 52},{"MissionID": 53}, {"MissionID": 54}]
       data = res;
       this.userAllMissionsID=data
-      if(this.userAllMissionsID.length){
-        this.userAllMissionsID.forEach(item => {
-
-        
-        });
-
-      }
-
-    })
+      })
     .catch(e => {
       console.log(e);
     });
@@ -72,8 +71,18 @@ getMyMissions(id){
             this.userAllMissionsID.forEach((id: {MissionID: number;}, i) => {
               if(id.MissionID === item.MissionID){
                 this.missions[i] = item;
+                if(this.missions[i].Status == 0){
+                  this.missions[i].status = 'Scheduled'
+               }else if(this.missions[i].Status == 1){
+                this.missions[i].status = 'Active'
+              
+               }else if(this.missions[i].Status == 2){
+                this.missions[i].status = 'Finished'
+              
+               }else {this.missions[i].status = 'Canceled' }
 
               }
+
     
             
             });
@@ -87,5 +96,23 @@ getMyMissions(id){
     });
 
   }
+  getUserName(){
+
+    this.getAllUsers()
+    .then((allUsers: Array<any>) => {
+            allUsers.forEach((item) => {
+              if (this.loginId === item.UserID) {
+                  this.user = item;
+              }
+            })
+          })
+  }
+
+  getAllUsers() {
+    return this.http
+      .get(`${CONFIG.BACKEND_API}/api/users/list`)
+      .toPromise()
+  }
+
 
 }

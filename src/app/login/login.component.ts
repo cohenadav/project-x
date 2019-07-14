@@ -59,8 +59,24 @@ export class LoginComponent implements OnInit {
     this.http.
       post(`${CONFIG.BACKEND_API}/api/user/login`, this.loginForm.getRawValue(), {withCredentials: true} ).toPromise()
     .then(res => {
+
       localStorage.setItem('user', JSON.stringify(res));
+
+      this.router.navigateByUrl('');
+      setTimeout(() => {
+        window.location.reload();
+      }, 10);
+
+      
     })
+    .catch(e => {
+      console.log(e);
+      if(e.statusText === 'Unauthorized'){
+        this.loading =false;
+        this.error = 'Failed to login!'
+        localStorage.clear();
+      }
+    });
 
     //JSON.parse(localStorage.getItem('user')) // { isAdmin: boolean; userid: 15 }
     // this.authenticationService.login(this.f.username.value, this.f.password.value)

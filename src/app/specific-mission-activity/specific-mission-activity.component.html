@@ -2,20 +2,20 @@
   specific-mission-activity works!
 </p>
 
-<form #f="ngForm" (ngSubmit) ="submit(f.value)">
+<form [formGroup]="activityForm" (ngSubmit) ="submit()">
 
+ <fieldset class="form-group">
 
-
- <div class="form-group row">
-  <label for="ActivityID" class="col-sm-2 col-form-label"> Select Activity </label>
-   <select ngModel name="ActivityID" class="col-sm-3" id="ActivityID">
-    <option *ngFor="let activity of allActivities" [value]="activity.ActivityID">
+  <div class="form-group row">
+    <label for="ActivityID" class="col-sm-2 col-form-label"> Select Activity </label>
+    <select  formControlName="ActivityID" class="col-sm-3" id="ActivityID" [ngClass]="{'is-invalid': this.submitted && activityForm.controls.ActivityID.errors }">
+     <option *ngFor="let activity of allActivities" [value]="activity.ActivityID">
       {{activity.Name}}
-    </option>
-   </select>
-  </div>
+      </option>
+    </select>
+   </div>
 
-
+</fieldset>
 
 
 
@@ -23,18 +23,37 @@
 <div class="form-group row">
   <label for="Start_date" class="col-sm-2 col-form-label">Start Date</label>
   <div class="col-sm-3">
-    <input required ngModel name="Start_date" #Start_date="ngModel"  type="date" class="form-control" >
-
+    <input formControlName="Start_date"  type="date" class="form-control" [ngClass]="{'is-invalid': this.submitted && activityForm.controls.Start_date.errors }">
+    <div *ngIf="this.submitted && (activityForm.controls.End_date.errors && activityForm.controls.Start_date.errors.required )" class="invalid-feedback"> Start date is required</div>
   </div>
 </div> 
 
 <div class="form-group row">
+  <label for="Start_time" class="col-sm-2 col-form-label">Start time</label>
+  <div class="col-sm-3">
+    <input formControlName="Start_time"  type="time" class="form-control" [ngClass]="{'is-invalid': this.submitted && activityForm.controls.Start_time.errors }">
+    <div *ngIf="this.submitted && (activityForm.controls.End_date.errors && activityForm.controls.Start_time.errors.required )" class="invalid-feedback"> Start time is required</div>
+  </div>
+</div> 
+
+
+
+<div class="form-group row">
   <label for="End_date" class="col-sm-2 col-form-label">End Date</label>
   <div class="col-sm-3">
-    <input required ngModel name="End_date" #End_date="ngModel"  type="date" class="form-control" >
-
+    <input formControlName="End_date"  type="date" class="form-control" [ngClass]="{'is-invalid': this.submitted && dateError }">
+    <div *ngIf="dateError" class="invalid-feedback"> End date must be after start date</div>
+    <div *ngIf="this.submitted && (activityForm.controls.End_date.errors && activityForm.controls.End_date.errors.required )" class="invalid-feedback"> End date is required</div>
   </div>
 </div>
+
+<div class="form-group row">
+  <label for="End_time" class="col-sm-2 col-form-label">End time</label>
+  <div class="col-sm-3">
+    <input formControlName="End_time" type="time" class="form-control" [ngClass]="{'is-invalid': this.submitted && activityForm.controls.End_time.errors }">
+    <div *ngIf="this.submitted && (activityForm.controls.End_time.errors && activityForm.controls.End_time.errors.required )" class="invalid-feedback"> End time is required</div>
+  </div>
+</div> 
 
 
   
@@ -51,13 +70,13 @@
                   <div class="row">
                     
                   <label for="user{{number}}.Role" class="col-sm-2 col-form-label">User{{number+1}} Role:</label>
-                  <select [(ngModel)]="usersActivityRoles[in].Role"  name="user{{number}}.Role" class="col-sm-3" id="Role">
+                  <select [(ngModel)]="usersActivityRoles[in].Role"  name="user{{number}}.Role" class="col-sm-3" id="Role"  [ngModelOptions]="{standalone: true}" >
                       <option *ngFor="let role of roles" [value]="role">
                         {{role}}
                       </option>
                   </select>
                   <label for="user{{number}}.UserID" class="col-sm-2 col-form-label"> User{{number+1}} Name:</label>
-                  <select [(ngModel)]="usersActivityRoles[in].UserID" name="user{{number}}.UserID" class="col-sm-3" id="user">
+                  <select [(ngModel)]="usersActivityRoles[in].UserID" name="user{{number}}.UserID" class="col-sm-3" id="user"  [ngModelOptions]="{standalone: true}" >
                       <option *ngFor="let user of allMissionsUsers" [value]="user.UserID">
                         {{user.Name}}
                       </option>
@@ -65,16 +84,16 @@
               </div>
             </div>
           </div>
-        <p>{{this.usersActivityRoles | json }}</p>  
+        <p>{{usersActivityRoles | json }}</p>  
      
     </div> 
   
 
 
 
-<p>{{f.value | json}}</p>
+<p>{{activityForm.value | json}}</p>
   
-
+<div *ngIf="this.submitted && !this.usCk" class="alert alert-danger"> insert 5 diffrent users and choose them a role  </div>
 <div class="form-group row">
   <div class="col-sm-10">
     <button type="submit" class="btn btn-primary"  >Submmit</button>

@@ -1,28 +1,31 @@
-<form #f="ngForm" (ngSubmit) ="submit(f.value)">
+<form [formGroup]="activityForm" (ngSubmit) ="submit()">
 
   <div class="form-group row">
 
-    <label for="name" class="col-sm-2 col-form-label">Activity Name</label>
+    <label for="Name" class="col-sm-2 col-form-label">Activity Name</label>
     <div class="col-sm-5">
-      <input required minlength="3" maxlength="30"  ngModel name="Name" #Name="ngModel" type="text" [ngClass]="{'invalid': errors.Name, 'second': true, 'third': false}" class="form-control" placeholder="Name">
-       <div  class="alert alert-danger" *ngIf="errors.Name">{{errors.Name}} </div>  
+      <input type="text"  formControlName="Name" class="form-control" [ngClass]="{'is-invalid': this.submitted && activityForm.controls.Name.errors }"  placeholder="Name">
+      <div *ngIf="this.submitted && (activityForm.controls.Name.errors && activityForm.controls.Name.errors.minlength )" class="invalid-feedback">Name should be minimum 4 characters long </div>
+      <div *ngIf="this.submitted && (activityForm.controls.Name.errors && activityForm.controls.Name.errors.required )" class="invalid-feedback"> Name is required</div>
+      
+       <!-- <div  class="alert alert-danger" *ngIf="errors.Name">{{errors.Name}} </div>   -->
     </div>
   </div>
 
   <div class="form-group row">
     <label for="Duration" class="col-sm-2 col-form-label">Duration</label>
     <div class="col-sm-5">
-      <input required minlength="1" maxlength="4" ngModel name="Duration" #Duration="ngModel"  type="text" class="form-control" placeholder="Duration (hours)">
-      <div class="alert alert-danger" *ngIf="!Duration.valid && Duration.touched">Please enter a valid Duration</div>
-      <!-- <div class="alert alert-danger" *ngIf="Age.errors.minlength">Age must be 2 digits.</div> -->
+      <input formControlName="Duration"   type="text" class="form-control" placeholder="Duration (hours)" [ngClass]="{'is-invalid': this.submitted && activityForm.controls.Duration.errors }">
+      <div *ngIf="this.submitted && (activityForm.controls.Duration.errors && activityForm.controls.Duration.errors.pattern )" class="invalid-feedback">Duration should be only numbers </div>
+      <div *ngIf="this.submitted && (activityForm.controls.Duration.errors && activityForm.controls.Duration.errors.required )" class="invalid-feedback"> Duration is required</div>
     </div>
   </div>
 
   <div class="form-group row">
     <label for="Description" class="col-sm-2 col-form-label">Description</label>
     <div class="col-sm-5">
-      <input required maxlength="90" ngModel name="Description" #Description="ngModel"  type="textarea" class="form-control" placeholder="Description">
-      <div class="alert alert-danger" *ngIf="!Description.valid && Description.touched">Please enter a valid Description</div>
+      <input  formControlName="Description"   type="textarea" class="form-control" placeholder="Description">
+      <!-- <div class="alert alert-danger" *ngIf="!Description.valid && Description.touched">Please enter a valid Description</div> -->
       <!-- <div class="alert alert-danger" *ngIf="Age.errors.minlength">Age must be 2 digits.</div> -->
     </div>
   </div>
@@ -36,7 +39,7 @@
       <div class="row">
           <legend class="col-form-label col-sm-2 pt-2">Physical Rate</legend>
           <div class="col-auto my-1">
-            <select ngModel name="Physical_rate" class="custom-select mr-sm-2" id="Physical_rate">
+            <select  formControlName="Physical_rate" class="custom-select mr-sm-2" id="Physical_rate" [ngClass]="{'is-invalid': this.submitted && activityForm.controls.Physical_rate.errors }">
               <!-- <option selected>Choose...</option> -->
               <option value="1">1</option>
               <option value="2">2</option>
@@ -45,18 +48,59 @@
               <option value="5">5</option>
             </select>
           </div>
+          <div *ngIf="this.submitted && (activityForm.controls.Physical_rate.errors && activityForm.controls.Physical_rate.errors.required )" class="invalid-feedback"> Physical Rate is required</div>
+        </div>
+<br>
+        <div class="form-group row">
+          <label for="Role1" class="col-sm-2 col-form-label">Role 1</label>
+          <div class="col-sm-5">
+            <input formControlName="Role1"   type="text" class="form-control" placeholder="Role #1 (optional)">
+            <!-- <div *ngIf="this.submitted && (activityForm.controls.Duration.errors && activityForm.controls.Duration.errors.pattern )" class="invalid-feedback">Duration should be only numbers </div>
+            <div *ngIf="this.submitted && (activityForm.controls.Duration.errors && activityForm.controls.Duration.errors.required )" class="invalid-feedback"> Duration is required</div> -->
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="Role2" class="col-sm-2 col-form-label">Role 2</label>
+          <div class="col-sm-5">
+            <input formControlName="Role2"   type="text" class="form-control" placeholder="Role #2 (optional)">
+            <!-- <div *ngIf="this.submitted && (activityForm.controls.Duration.errors && activityForm.controls.Duration.errors.pattern )" class="invalid-feedback">Duration should be only numbers </div>
+            <div *ngIf="this.submitted && (activityForm.controls.Duration.errors && activityForm.controls.Duration.errors.required )" class="invalid-feedback"> Duration is required</div> -->
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="Role3" class="col-sm-2 col-form-label">Role 3</label>
+          <div class="col-sm-5">
+            <input formControlName="Role3"   type="text" class="form-control" placeholder="Role #3 (optional)">
+            <!-- <div *ngIf="this.submitted && (activityForm.controls.Duration.errors && activityForm.controls.Duration.errors.pattern )" class="invalid-feedback">Duration should be only numbers </div>
+            <div *ngIf="this.submitted && (activityForm.controls.Duration.errors && activityForm.controls.Duration.errors.required )" class="invalid-feedback"> Duration is required</div> -->
+          </div>
+        </div>
+        
+        <div class="form-group row">
+          <label for="Role4" class="col-sm-2 col-form-label">Role 4</label>
+          <div class="col-sm-5">
+            <input formControlName="Role4"   type="text" class="form-control" placeholder="Role #4 (optional)">
+            <!-- <div *ngIf="this.submitted && (activityForm.controls.Duration.errors && activityForm.controls.Duration.errors.pattern )" class="invalid-feedback">Duration should be only numbers </div>
+            <div *ngIf="this.submitted && (activityForm.controls.Duration.errors && activityForm.controls.Duration.errors.required )" class="invalid-feedback"> Duration is required</div> -->
+          </div>
         </div>
 
 </fieldset>
-
-
+<p>{{this.activityForm.value | json}}</p>
+<!-- 
   <p>{{f.value | json}}</p>
-  <p>{{f.value.Type}} </p>
+  <p>{{f.value.Type}} </p> -->
+  
+<br>
+<br>
+
 
   <div class="form-group row">
     <div class="col-sm-10">
       <button type="submit" class="btn btn-primary"  >Submmit</button>
     </div>
   </div>
-  
+  <div *ngIf="error" class="alert alert-danger">{{error}}</div>
 </form>

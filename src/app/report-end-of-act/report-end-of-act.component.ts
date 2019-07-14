@@ -95,14 +95,19 @@ export class ReportEndOfActComponent implements OnInit {
 
           console.log(rep);
       
-          this.http.post(`${CONFIG.BACKEND_API}/api/missions/activity/report`,rep).toPromise().then((res: {msg: string} )=>{
+          this.http.post(`${CONFIG.BACKEND_API}/api/missions/activity/report`,rep).toPromise().then(res=>{
             this.errors = {};
-            if (res.msg === 'Reported') {
-              this.router.navigateByUrl(`/missions/${this.mission_id}`);
-              setTimeout(() => {
-                window.location.reload();
-              }, 50);
+            (res as Array<any>).forEach(obj => {
+              if (obj === 'Reported') {
+                // this.router.navigateByUrl('/users');
+                setTimeout(() => {
+                  window.location.reload();
+                }, 50);
             }
+              this.errors[obj.param] = this.errors[obj.param] ? this.errors[obj.param] + " " + obj.msg : obj.msg;
+            })
+          
+           
           }).catch(error => {
             console.log(error);
           })

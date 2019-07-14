@@ -1,3 +1,28 @@
-<p>
-  personal-info works!
-</p>
+<h1 style="text-align: center">
+  Personal Info 
+</h1>
+
+<!-- <p>{{this.user | json}}</p>
+<p>{{this.userShow | json}}</p> -->
+
+<div style="padding: 130px;" class="text-data">
+  
+
+    <h3> Name: {{this.user.Name}} </h3>
+    <h3> Age: {{this.user.Age}} </h3>
+    <h3> Gender: {{this.user.Gender}} </h3>
+    <h3> Type: {{this.user.Type}} </h3>
+<br>
+  
+
+  <div *ngIf="this.user.Type =='Ramonaut'">
+     <h2 style="text-decoration: underline" >Physiological Details: </h2> 
+    
+      <h3> Height: {{this.user.Height}} </h3>
+      <h3> Weight: {{this.user.Weight}} </h3>
+      <h3> Physical Rate: {{this.user.Physical_rate}} </h3>
+    
+  </div>
+
+</div>
+

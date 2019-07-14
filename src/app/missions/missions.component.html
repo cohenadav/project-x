@@ -20,8 +20,8 @@
       <td>{{mission.Status}}</td>
 
       <div class="row">
-        <a routerLink="{{mission.MissionID |json}}/mission-form" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Edit</a>
-        <button (click)="deleteMission(mission.id)">Delete</button>
+        <a routerLink="{{mission.MissionID |json}}/mission-form/edit" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Edit</a>
+        <!-- <button (click)="deleteMission(mission.id)">Delete</button> -->
       </div>
 
     </tr>                

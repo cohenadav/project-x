@@ -59,6 +59,7 @@ import {AuthGuardService} from './auth.service';
     LoginComponent,
     MyMissionsComponent,
     PersonalInfoComponent
+    ,AppComponent
   ],
   imports: [
     // NgbModule,
@@ -69,6 +70,11 @@ import {AuthGuardService} from './auth.service';
     FormsModule,
     RouterModule.forRoot([
       { path: "", component: HomeComponent, canActivate:[AuthGuardService] },
+      {
+        path: "personalInfo",
+        component: PersonalInfoComponent,
+        canActivate:[AuthGuardService]
+      },
       {
         path: "my-missions",
         component: MyMissionsComponent,
@@ -111,6 +117,11 @@ import {AuthGuardService} from './auth.service';
         canActivate:[AuthGuardService]
       },
       {
+        path: "missions/:missionID/mission-form/edit",
+        component: EditMissionFormComponent,
+        canActivate:[AuthGuardService]
+      },
+      {
         path: "missions/:missionID/add-Activity",
         component: SpecificMissionActivityComponent,
         canActivate:[AuthGuardService]
@@ -131,11 +142,7 @@ import {AuthGuardService} from './auth.service';
         canActivate:[AuthGuardService]
       },
 
-      {
-        path: "missions/:missionID/mission-form",
-        component: EditMissionFormComponent,
-        canActivate:[AuthGuardService]
-      },
+
       // {
       //   path: "missions/:missionID/:missionActivityID/missionActivity-form",
       //   component: SpecificMissionActivityComponent

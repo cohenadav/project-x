@@ -56,13 +56,31 @@ export class MissionActivityComponent implements OnInit {
         this.getAllActivities()
         .then((allActivities: Array<any>) => {
           if(this.missionActivities.length)  {
-            this.missionActivities.forEach((act: { MA_ID: number; MissionID: number; ActivityID: number; Name?: string; Start_Date: string; Physical_rate:number; End_Date: string; Status:string; Actual_Duration: number; Water_cons: number; Water_expected:number;}) => {
+            this.missionActivities.forEach((act: { MA_ID: number; MissionID: number; ActivityID: number; Name?: string; Start_Date: string; Start_time?: string; Physical_rate:number; End_Date: string; End_time?: string; Status:number; status:String; Actual_Duration: number; Water_cons: number; Water_expected:number;}) => {
               console.log('Activity', act);
               if(act) {
+                let s = act.Start_Date
+                let e = act.End_Date
+                act.Start_Date =this.datepipe.transform(s, 'dd-MM-yyyy');
+                act.End_Date =this.datepipe.transform(e, 'dd-MM-yyyy');
+                var a = s.split("T");
+                var b = e.split("T");
+                act.Start_time =a[1].substring(0,5);
+                act.End_time =b[1].substring(0,5);
+                console.log(act);
+                if(act.Status == 0){
+                  act.status = 'Scheduled'
+               }else if(act.Status == 1){
+                 act.status = 'Active'
+
+               }else if(act.Status == 2){
+                act.status = 'Finished'
+
+               }else {act.status = 'Canceled' }
+
+
                 allActivities.forEach((item) => {
                   // console.log('item', item);
-                  act.Start_Date =this.datepipe.transform(act.Start_Date, 'dd-MM-yyyy');
-                  act.End_Date =this.datepipe.transform(act.End_Date, 'dd-MM-yyyy');
                   if (act.ActivityID === item.ActivityID) {
                     act.Name = item.Name;
                     act.Physical_rate = item.Physical_rate;
@@ -79,7 +97,9 @@ export class MissionActivityComponent implements OnInit {
 
   }
 
-
+  isActivitesFinished() {
+    return (this.specificMission.Status===3 || this.specificMission.Status===2) &&this.missionActivities.length && this.missionActivities.every(act => act.Status === 2 || act.Status === 3);
+  }
 
   getMissionData(id) {
     this.http
@@ -148,5 +168,21 @@ export class MissionActivityComponent implements OnInit {
     return this.http
       .get(`${CONFIG.BACKEND_API}/api/activities/list`)
       .toPromise()
+  }
+  statusCheck(value){
+    if(value=2){
+      return false;
+    }else{
+      return true;
+    }
+  }
+  generateReport(){
+    console.log(this.mission_id);
+    this.http
+      .get(`${CONFIG.BACKEND_API}/api/missions/generate-report?id=${this.mission_id}`)
+      .toPromise()
+      .then(res => { 
+
+      });
   }
 }

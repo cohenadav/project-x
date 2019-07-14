@@ -3,7 +3,10 @@ import CONFIG from 'src/config/config';
 import { HttpClient } from '@angular/common/http';
 import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 import { BodyComponent } from '../body/body.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { stringify } from '@angular/compiler/src/util';
+import { DatePipe } from '@angular/common';
 let data: any;
 
 @Injectable()
@@ -15,10 +18,15 @@ let data: any;
 export class MissionFormComponent implements OnInit {
   public missionFormData: any = data;
   public errors = {};
+  error = '';
+  submitted = false;
+  missionForm: FormGroup;
   public matDatepicker;
   public numberOfRoles = [0,1,2,3,4];
   public roles = ['Commander','Deputy Commander','Communication officer','Science officer'];
   public allUsers;
+  public ramonauts;
+  public usCk: boolean;
   
 
   public UMR1: userMissionRole;
@@ -27,9 +35,14 @@ export class MissionFormComponent implements OnInit {
   public UMR4: userMissionRole;
   public UMR5: userMissionRole;
   
+  
   public usersRoles = [];
 
-  constructor(private http: HttpClient,private router: Router) {
+  public dateError: boolean;
+
+  constructor(public datepipe: DatePipe, private http: HttpClient,private router: Router,private formBuilder: FormBuilder) {
+    this.ramonauts = [];
+    this.dateError = false;
 
     this.UMR1 = {
       UserID: "",
@@ -54,7 +67,27 @@ export class MissionFormComponent implements OnInit {
     this.usersRoles = [this.UMR1,this.UMR2,this.UMR3,this.UMR4,this.UMR5];
   }
 
+  checkDates = () => {
+    if (this && this.missionForm && new Date(this.missionForm.value.Start_date) > new Date(this.missionForm.value.End_date)) {
+      return true;
+    }
+    return false;
+    // return new Promise((res, rej) => {
+    //   if (this && this.missionForm && new Date(this.missionForm.value.Start_date) > new Date(this.missionForm.value.End_date)) {
+    //     return res({ notMatching: true });
+    //   }
+    //   return res(null);
+    // })
+  }
+
   ngOnInit() {
+    this.missionForm = this.formBuilder.group({
+      Name: ['',[Validators.required, Validators.minLength(5), Validators.maxLength(14)]],
+      Start_date : ['', Validators.required] ,
+      End_date: ['', Validators.required],
+      Status: ['', Validators.required],
+      Users: ['']
+    });
 
     this.getAllUsers();
     console.log(this.usersRoles);
@@ -71,12 +104,43 @@ export class MissionFormComponent implements OnInit {
     .catch(e => {
       console.log(e);
     });
+    this.getRamonauts()
+    .then((ramonauts: Array<any>) => {
+      ramonauts.forEach(( r,i) => {
+        this.allUsers.forEach(u => {
+          if(r.UserID==u.UserID){
+            this.ramonauts[i]= u;
+          } 
+          
+        });
+
+        
+      });
+
+    })
+
+  }
+  getRamonauts(){
+    return this.http
+    .get(`${CONFIG.BACKEND_API}/api/users/list-active-ramounouts`)
+    .toPromise()
   }
 
 
   
   submit(mission){
-    console.log(mission);
+    this.submitted = true;
+
+    if(this.checkDates()) {
+      this.dateError = true;
+      return; 
+    }
+    this.dateError = false;
+    
+    console.log(this.missionForm.value);
+    // if (this.missionForm.invalid) {
+    //   return;
+    // }
 
     function convertUserID(users) {
       users.forEach(users => {  
@@ -92,22 +156,61 @@ export class MissionFormComponent implements OnInit {
       return users;
       // window.location.reload();
     }
+    if(this.userCheck()){
+      let u = convertUserID(this.usersRoles);
+      let s = parseInt(this.missionForm.value.Status);
+      this.missionForm.controls['Status'].setValue(s);
+      this.missionForm.controls['Start_date'].setValue(this.datepipe.transform(this.missionForm.value.Start_date, "yyyy-MM-dd"));
+      this.missionForm.controls['End_date'].setValue(this.datepipe.transform(this.missionForm.value.End_date, "yyyy-MM-dd"));
+      // this.missionForm.value.Start_date = this.datepipe.transform(this.missionForm.value.Start_date, 'd/M/yy hh:mm:ss');
+      // this.missionForm.value.End_date = this.datepipe.transform(this.missionForm.value.End_date, 'd/M/yy hh:mm:ss');
 
-    mission.Users = convertUserID(this.usersRoles);
+    (this.missionForm.controls['Users']).setValue(u);
+    console.log('form value', this.missionForm.value)
+    
+    // mission.Users = convertUserID(this.usersRoles);
 
-    // mission.Users = this.usersRoles;  
-    this.http.post(`${CONFIG.BACKEND_API}/api/missions/add`,mission).toPromise().then((res: {msg: string} )=>{
-      this.errors = {};
-      if (res.msg === 'Added') {
-        this.router.navigateByUrl('/missions');
-        setTimeout(() => {
-          window.location.reload();
-        }, 50);
+        // mission.Users = this.usersRoles;  
+        this.http.post(`${CONFIG.BACKEND_API}/api/missions/add`,this.missionForm.value).toPromise().then((res: {msg: string} )=>{
+          this.errors = {};
+          if (res.msg === 'Added') {
+            this.router.navigateByUrl('/missions');
+            setTimeout(() => {
+              window.location.reload();
+            }, 50);
+          }
+        }).catch(error => {
+          console.log(error);
+        })
+
+    } else{
+      return false;
+    }
+
+
+
+
+  }
+  userCheck(){
+    for(let i=0; i<5 ;i++){
+      if( this.usersRoles[i].Role=="" || this.usersRoles[i].UserID=="" ){
+        console.log('false role!')
+        this.usCk = false;
+        return false;
+        }
+        for(let j=0; j<5; j++){
+          if((i!=j) && parseInt(this.usersRoles[i].UserID) == parseInt(this.usersRoles[j].UserID)){
+            console.log('false User! '+ this.usersRoles[i].UserID +'='+this.usersRoles[j].UserID)
+            console.log(i, j)
+            this.usCk = false;
+            return false;
+            
+          }
+        }
       }
-    }).catch(error => {
-      console.log(error);
-    })
-
+    console.log(true);
+    this.usCk = true;
+    return true;
 
   }
 }

@@ -3,6 +3,8 @@ import CONFIG from 'src/config/config';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 let data: any;
 
 @Injectable()
@@ -18,6 +20,10 @@ export class SpecificMissionActivityComponent implements OnInit {
   public numberOfRoles = [0,1,2,3,4];
   public roles = ['Commander','Deputy Commander','Communication officer','Science officer'];
   public errors = {};
+  activityForm: FormGroup
+  submitted = false;
+  public dateError: boolean;
+  public usCk: boolean;
 
   public UMR1: userMissionRole;
   public UMR2: userMissionRole;
@@ -27,9 +33,10 @@ export class SpecificMissionActivityComponent implements OnInit {
 
   public usersActivityRoles = [];
 
-  constructor(private http: HttpClient,private route: ActivatedRoute,private router: Router) {
+  constructor(private http: HttpClient,private route: ActivatedRoute,private router: Router,public datepipe: DatePipe,private formBuilder: FormBuilder) {
     this.allActivities = [];
     this.allMissionsUsers =[];
+    this.dateError = false;
 
     this.UMR1 = {
       UserID: "",
@@ -53,8 +60,25 @@ export class SpecificMissionActivityComponent implements OnInit {
     }
     this.usersActivityRoles = [this.UMR1,this.UMR2,this.UMR3,this.UMR4,this.UMR5];
    }
+   checkDates = () => {
+    if (this && this.activityForm && new Date(this.activityForm.value.Start_date) > new Date(this.activityForm.value.End_date)) {
+      return true;
+    }
+    return false;
+  }
 
   ngOnInit() {
+    this.activityForm = this.formBuilder.group({
+      ActivityID: ['',Validators.required],
+      Start_date : ['', Validators.required] ,
+      Start_time : ['', Validators.required] ,
+      End_date: ['', Validators.required],
+      End_time : ['', Validators.required] ,
+      Status: ['', Validators.required],
+      Users: [''],
+      MissionID: ['']
+    });
+
     this.route.paramMap
     .subscribe(params => {
       // console.log(params.get('missionID'));
@@ -66,6 +90,7 @@ export class SpecificMissionActivityComponent implements OnInit {
   this.getAllActivities();
   this.getMissionsUsers(this.missionId);
 }
+
 
     getAllActivities(){
     this.http
@@ -121,7 +146,15 @@ getActivityID(name){
 
 }
 submit(missionActivity){
-  console.log(missionActivity);
+  this.submitted = true;
+  // if(this.checkDates()) {
+  //   this.dateError = true;
+  //   return; 
+  // }
+  this.dateError = false;
+
+  
+  console.log(this.activityForm.value);
 
   function convertUserID(users) {
     users.forEach(users => {  
@@ -136,25 +169,60 @@ submit(missionActivity){
 
     return users;
     // window.location.reload();
+
   }
+  // "yyyy-MM-ddTHH:mm:ss"
 
-  missionActivity.Users = convertUserID(this.usersActivityRoles);
-  missionActivity.MissionID = this.missionId;
 
-  // mission.Users = this.usersRoles;  
-  console.log(missionActivity);
-  this.http.post(`${CONFIG.BACKEND_API}/api/missions/activity/add`,missionActivity).toPromise().then((res: {msg: string} )=>{
-    this.errors = {};
-    if (res.msg === 'added') {
-      this.router.navigateByUrl(`/missions/${this.missionId}`);
-      setTimeout(() => {
-        window.location.reload();
-      }, 50);
+  let u = convertUserID(this.usersActivityRoles);
+  this.activityForm.controls['MissionID'].setValue(this.missionId);
+  // console.log(missionActivity.Start_date)
+  // console.log(missionActivity.End_date)
+
+  // missionActivity.Start_date = missionActivity.Start_date + " " +missionActivity.Start_time;
+  // missionActivity.End_date = missionActivity.End_date + " " +missionActivity.End_time;;
+  // console.log(missionActivity.Start_date)
+  // console.log(missionActivity.End_date);
+  
+  (this.activityForm.controls['Users']).setValue(u);
+  console.log('form value', this.activityForm.value)
+
+
+  
+  // this.http.post(`${CONFIG.BACKEND_API}/api/missions/activity/add`,activityForm.value).toPromise().then((res: {msg: string} )=>{
+  //   this.errors = {};
+  //   if (res.msg === 'added') {
+  //     this.router.navigateByUrl(`/missions/${this.missionId}`);
+  //     setTimeout(() => {
+  //       window.location.reload();
+  //     }, 50);
+  //   }
+  // }).catch(error => {
+  //   console.log(error);
+  // })
+
+
+}
+userCheck(){
+  for(let i=0; i<5 ;i++){
+    if( this.usersActivityRoles[i].Role=="" || this.usersActivityRoles[i].UserID=="" ){
+      console.log('false role!')
+      this.usCk = false;
+      return false;
+      }
+      for(let j=0; j<5; j++){
+        if((i!=j) && parseInt(this.usersActivityRoles[i].UserID) == parseInt(this.usersActivityRoles[j].UserID)){
+          console.log('false User! '+ this.usersActivityRoles[i].UserID +'='+this.usersActivityRoles[j].UserID)
+          console.log(i, j)
+          this.usCk = false;
+          return false;
+          
+        }
+      }
     }
-  }).catch(error => {
-    console.log(error);
-  })
-
+  console.log(true);
+  this.usCk = true;
+  return true;
 
 }
 

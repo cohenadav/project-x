@@ -1,0 +1,16 @@
+.progress{
+    background-color: #ababab;
+}
+
+
+.text-blue {
+    font-size: 2em;
+    color: #007bff;
+    padding: 5px;
+}
+
+.text-yellow {
+    padding: 5px;
+    font-size: 2em;
+    color: #ffc107;
+}
