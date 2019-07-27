@@ -2,6 +2,7 @@ import { Component, OnInit,Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import CONFIG from 'src/config/config';
+import { Router } from '@angular/router';
 let data;
 
 @Injectable()
@@ -17,7 +18,7 @@ export class EditActivityFormComponent implements OnInit {
   public activitiesData: any = data;
   public activityId;
   
-  constructor(private http: HttpClient, private route: ActivatedRoute) { 
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) { 
     this.specificActivity = {};
   }
 
@@ -77,17 +78,16 @@ submit(activity){
 
   activity.ActivityID = this.activityId;
 
-  this.http.post(`${CONFIG.BACKEND_API}/api/activities/edit`, convertActivity(activity)).toPromise().then(res=>{
+  this.http.post(`${CONFIG.BACKEND_API}/api/activities/edit`, convertActivity(activity)).toPromise().then((res:{msg:  string})=>{
     this.errors = {};
-    (res as Array<any>).forEach(obj => {
-      if (obj.msg === 'Changed') {
-        // this.router.navigateByUrl('/users');
+    
+      if (res.msg === 'Changed') {
+        this.router.navigateByUrl('/activities');
         setTimeout(() => {
           window.location.reload();
-        }, 1300);
+        }, 50);
       }
-      this.errors[obj.param] = this.errors[obj.param] ? this.errors[obj.param] + " " + obj.msg : obj.msg;
-    })
+     
   }).catch(error => {
     console.log(error);
   })

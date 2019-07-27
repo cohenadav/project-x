@@ -56,16 +56,21 @@ export class ActivityInMissionComponent implements OnInit {
         this.missionActivities = res;
         console.log(this.missionActivities);
 
-        this.getAllActivities()
+        // this.getAllActivities()
+        this.http
+        .get(`${CONFIG.BACKEND_API}/api/activities/list`)
+        .toPromise()
         .then((allActivities: Array<any>) => {
           if(this.missionActivities.length)  {
             this.missionActivities.forEach((act: { MA_ID: number; MissionID: number; ActivityID: number; Name?: string; Start_Date: string; Physical_rate:number; End_Date: string; Status:string; Actual_Duration: number; Water_cons: number; Water_expected:number;}) => {
               console.log('Activity', act);
               if(act) {
+                act.Start_Date =this.datepipe.transform(act.Start_Date, 'dd-MM-yyyy hh:mm');
+                act.End_Date =this.datepipe.transform(act.End_Date,  'dd-MM-yyyy hh:mm');
                 allActivities.forEach((item) => {
-                  // console.log('item', item);
-                  act.Start_Date =this.datepipe.transform(act.Start_Date, 'dd-MM-yyyy');
-                  act.End_Date =this.datepipe.transform(act.End_Date,  'dd-MM-yyyy');
+
+                   console.log('item', item);
+                  
                   if (act.ActivityID === item.ActivityID) {
                     act.Name = item.Name;
                     act.Physical_rate = item.Physical_rate;

@@ -147,10 +147,11 @@ getActivityID(name){
 }
 submit(missionActivity){
   this.submitted = true;
-  // if(this.checkDates()) {
-  //   this.dateError = true;
-  //   return; 
-  // }
+
+  if(this.checkDates()) {
+    this.dateError = true;
+    return; 
+  }
   this.dateError = false;
 
   
@@ -173,11 +174,18 @@ submit(missionActivity){
   }
   // "yyyy-MM-ddTHH:mm:ss"
 
-
+  if(this.userCheck()){
   let u = convertUserID(this.usersActivityRoles);
   this.activityForm.controls['MissionID'].setValue(this.missionId);
   // console.log(missionActivity.Start_date)
   // console.log(missionActivity.End_date)
+  let sd = this.activityForm.value.Start_date+ " "+ this.activityForm.value.Start_time;
+  console.log(sd);
+  let ed = this.activityForm.value.End_date+ " "+ this.activityForm.value.End_time;
+  console.log(ed);
+
+  (this.activityForm.controls['Start_date']).setValue(sd);
+  (this.activityForm.controls['End_date']).setValue(ed);
 
   // missionActivity.Start_date = missionActivity.Start_date + " " +missionActivity.Start_time;
   // missionActivity.End_date = missionActivity.End_date + " " +missionActivity.End_time;;
@@ -185,23 +193,23 @@ submit(missionActivity){
   // console.log(missionActivity.End_date);
   
   (this.activityForm.controls['Users']).setValue(u);
-  console.log('form value', this.activityForm.value)
+  console.log('work work work', this.activityForm.value)
 
 
   
-  // this.http.post(`${CONFIG.BACKEND_API}/api/missions/activity/add`,activityForm.value).toPromise().then((res: {msg: string} )=>{
-  //   this.errors = {};
-  //   if (res.msg === 'added') {
-  //     this.router.navigateByUrl(`/missions/${this.missionId}`);
-  //     setTimeout(() => {
-  //       window.location.reload();
-  //     }, 50);
-  //   }
-  // }).catch(error => {
-  //   console.log(error);
-  // })
+  this.http.post(`${CONFIG.BACKEND_API}/api/missions/activity/add`,this.activityForm.value).toPromise().then((res: {msg: string} )=>{
+    this.errors = {};
+    if (res.msg === 'added') {
+      this.router.navigateByUrl(`/missions/${this.missionId}`);
+      setTimeout(() => {
+        window.location.reload();
+      }, 50);
+    }
+  }).catch(error => {
+    console.log(error);
+  })
 
-
+  }
 }
 userCheck(){
   for(let i=0; i<5 ;i++){

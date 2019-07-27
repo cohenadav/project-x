@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit {
   public userId;
   public isAdmin: boolean = false;
   public userDetails;
+  public isControl: boolean = false;
 
   constructor(private route: ActivatedRoute, private http: HttpClient,private router: Router,) {
     this.userDetails = {};
@@ -33,9 +34,15 @@ export class HeaderComponent implements OnInit {
     if(a === 1){
       this.isAdmin = true;
     }
+    let b = this.loginUser.Type;
+    if(b === 0){
+      this.isControl = true;
+    }
     if(localStorage.length){
       this.loggedIn = true;
     }
+    
+
   }
     console.log(this.isAdmin)
     console.log(this.userId)

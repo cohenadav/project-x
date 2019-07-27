@@ -19,6 +19,7 @@ export class MissionActivityComponent implements OnInit {
   public missionIndex;
   public specificMission;
   public missionUsersNames;
+  public rep;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, public datepipe: DatePipe) {
     this.specificMission = {};
@@ -35,6 +36,7 @@ export class MissionActivityComponent implements OnInit {
         console.log(params.get('missionID'));
         let id = +params.get('missionID')
         this.mission_id = id;
+        this.downloadLink = `${CONFIG.BACKEND_API}/api/missions/generate-report?id=${this.mission_id}`
         // console.log(this.mission_id);
         this.getMissionActivityData(id);
 
@@ -176,13 +178,16 @@ export class MissionActivityComponent implements OnInit {
       return true;
     }
   }
+
+  public downloadLink = '';
   generateReport(){
     console.log(this.mission_id);
     this.http
       .get(`${CONFIG.BACKEND_API}/api/missions/generate-report?id=${this.mission_id}`)
       .toPromise()
-      .then(res => { 
-
+      .then(res => { res =this.rep
+        window.location.href= this.rep;
       });
+      
   }
 }
