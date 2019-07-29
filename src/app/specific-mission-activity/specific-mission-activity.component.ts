@@ -50,15 +50,8 @@ export class SpecificMissionActivityComponent implements OnInit {
       UserID: "",
       Role:""
     }
-    this.UMR4 = {
-      UserID: "",
-      Role:""
-    }
-    this.UMR5 = {
-      UserID: "",
-      Role:""
-    }
-    this.usersActivityRoles = [this.UMR1,this.UMR2,this.UMR3,this.UMR4,this.UMR5];
+
+    this.usersActivityRoles = [this.UMR1,this.UMR2,this.UMR3];
    }
    checkDates = () => {
     if (this && this.activityForm && new Date(this.activityForm.value.Start_date) > new Date(this.activityForm.value.End_date)) {
