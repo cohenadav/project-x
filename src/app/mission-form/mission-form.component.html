@@ -72,6 +72,7 @@
                 <option value="0">Scheduled</option>
                 <option value="1">In process</option>
                 <option value="2">Finished</option>
+                <option value="3">Canceled</option>
               </select>
             </div>
           </div>
@@ -115,13 +116,14 @@
   
   
     <!-- <p>{{missionForm.value | json}}</p> -->
-  
+    <div *ngIf="this.submitted && this.dateInUse" class="alert alert-danger"> {{dateInUse | json}}  </div>
+
     <div *ngIf="this.submitted && !this.usCk" class="alert alert-danger"> insert 5 diffrent users and choose them a role  </div>
     <div class="form-group row">
       <div class="col-sm-10">
         <button type="submit" class="btn btn-primary"  >Submit</button>
       </div>
     </div>
-  
+    
     
   </form>

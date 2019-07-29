@@ -102,6 +102,10 @@ export class MissionActivityComponent implements OnInit {
   isActivitesFinished() {
     return (this.specificMission.Status===3 || this.specificMission.Status===2) &&this.missionActivities.length && this.missionActivities.every(act => act.Status === 2 || act.Status === 3);
   }
+  isMissionFinished(){
+    return (this.specificMission.Status===2)
+
+  }
 
   getMissionData(id) {
     this.http

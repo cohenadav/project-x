@@ -68,6 +68,6 @@
 
 <button type="button" class="btn btn-outline-success" routerLink="./add-Activity">Add Activity</button>
  <br>
-<div class="text-right" *ngIf="isActivitesFinished()">
+<div class="text-right" *ngIf="isMissionFinished()">
     <a style="padding-inline: 200px" type="button" class="btn btn-primary" [attr.href]="downloadLink" download>Generate Mission Report</a>
 </div>

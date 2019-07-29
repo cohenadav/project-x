@@ -34,6 +34,15 @@ export class MissionsComponent implements OnInit {
       this.missionData.forEach(item => {
         item.Start_date =this.datepipe.transform(item.Start_date, 'dd-MM-yyyy');
         item.End_date =this.datepipe.transform(item.End_date, 'dd-MM-yyyy');
+        if(item.Status === 0){
+                item.status = "Scheduled"
+        }else if(item.Status === 1){
+                item.status = "Active"
+        }else if(item.Status === 2){
+                item.status = "Finished"
+        }else if(item.Status === 3){
+                item.status = "Canceled"
+        }
         
       });
     })

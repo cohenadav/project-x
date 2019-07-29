@@ -17,7 +17,7 @@ export class SpecificMissionActivityComponent implements OnInit {
   public allActivities;
   public missionId;
   public allMissionsUsers;
-  public numberOfRoles = [0,1,2,3,4];
+  public numberOfRoles = [0,1,2];
   public roles = ['Commander','Deputy Commander','Communication officer','Science officer'];
   public errors = {};
   activityForm: FormGroup
@@ -212,13 +212,13 @@ submit(missionActivity){
   }
 }
 userCheck(){
-  for(let i=0; i<5 ;i++){
+  for(let i=0; i<3 ;i++){
     if( this.usersActivityRoles[i].Role=="" || this.usersActivityRoles[i].UserID=="" ){
       console.log('false role!')
       this.usCk = false;
       return false;
       }
-      for(let j=0; j<5; j++){
+      for(let j=0; j<3; j++){
         if((i!=j) && parseInt(this.usersActivityRoles[i].UserID) == parseInt(this.usersActivityRoles[j].UserID)){
           console.log('false User! '+ this.usersActivityRoles[i].UserID +'='+this.usersActivityRoles[j].UserID)
           console.log(i, j)

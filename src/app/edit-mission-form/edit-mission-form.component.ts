@@ -17,6 +17,7 @@ export class EditMissionFormComponent implements OnInit {
   private Mission : any;
   public index;
   public errors = {};
+  public errMsg = "";
 
   constructor(private http: HttpClient, private route: ActivatedRoute, public datepipe: DatePipe,private router: Router) {
     this.Mission = {};
@@ -66,14 +67,29 @@ export class EditMissionFormComponent implements OnInit {
 
     mission.MissionID = this.Mission.MissionID;
     console.log(mission);
+    
+    function convertMission(mission) {
+      for (let key in mission) {
+        if (key == 'Status') {
+         
+            mission[key] = parseInt(mission[key]);
+          
+        }
+      }
+      return mission;
+      // window.location.reload();
+    }
 
-    this.http.post(`${CONFIG.BACKEND_API}/api/missions/edit`,mission).toPromise().then((res: {msg: string} )=>{
+    this.http.post(`${CONFIG.BACKEND_API}/api/missions/edit`,convertMission(mission)).toPromise().then((res: {msg: string} )=>{
       this.errors = {};
       if (res.msg === 'Changed') {
+        this.errMsg = "";
         this.router.navigateByUrl('/missions');
         setTimeout(() => {
           window.location.reload();
         }, 50);
+      }else{
+        this.errMsg = res.msg;
       }
     }).catch(error => {
       console.log(error);

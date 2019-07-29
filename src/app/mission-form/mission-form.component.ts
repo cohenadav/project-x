@@ -27,6 +27,7 @@ export class MissionFormComponent implements OnInit {
   public allUsers;
   public ramonauts;
   public usCk: boolean;
+  public dateInUse = "";
   
 
   public UMR1: userMissionRole;
@@ -174,10 +175,13 @@ export class MissionFormComponent implements OnInit {
         this.http.post(`${CONFIG.BACKEND_API}/api/missions/add`,this.missionForm.value).toPromise().then((res: {msg: string} )=>{
           this.errors = {};
           if (res.msg === 'Added') {
+            this.dateInUse = "";
             this.router.navigateByUrl('/missions');
             setTimeout(() => {
               window.location.reload();
             }, 50);
+          }else{
+            this.dateInUse = res.msg;
           }
         }).catch(error => {
           console.log(error);
