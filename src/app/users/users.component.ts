@@ -46,6 +46,12 @@ export class UsersComponent implements OnInit {
         
       }else return " ";
     }
+    roleCheck(type){
+      if (type == 0){
+        return "Control";
+      }else return "Ramonaut";
+    }
+    
 
     deleteUser(id,name){
       if(confirm("Are you sure you want to delete "+name+ "?")){

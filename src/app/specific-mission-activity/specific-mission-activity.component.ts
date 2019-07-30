@@ -23,7 +23,10 @@ export class SpecificMissionActivityComponent implements OnInit {
   activityForm: FormGroup
   submitted = false;
   public dateError: boolean;
-  public usCk: boolean;
+  public dateError2: boolean;
+  public usCk: boolean = false;
+  public allMissionDB;
+  public currentMission;
 
   public UMR1: userMissionRole;
   public UMR2: userMissionRole;
@@ -36,7 +39,10 @@ export class SpecificMissionActivityComponent implements OnInit {
   constructor(private http: HttpClient,private route: ActivatedRoute,private router: Router,public datepipe: DatePipe,private formBuilder: FormBuilder) {
     this.allActivities = [];
     this.allMissionsUsers =[];
+    this.allMissionDB= [] ;
     this.dateError = false;
+    this.dateError2 = false;
+    this.currentMission = {};
 
     this.UMR1 = {
       UserID: "",
@@ -53,12 +59,8 @@ export class SpecificMissionActivityComponent implements OnInit {
 
     this.usersActivityRoles = [this.UMR1,this.UMR2,this.UMR3];
    }
-   checkDates = () => {
-    if (this && this.activityForm && new Date(this.activityForm.value.Start_date) > new Date(this.activityForm.value.End_date)) {
-      return true;
-    }
-    return false;
-  }
+
+
 
   ngOnInit() {
     this.activityForm = this.formBuilder.group({
@@ -82,6 +84,7 @@ export class SpecificMissionActivityComponent implements OnInit {
   })
   this.getAllActivities();
   this.getMissionsUsers(this.missionId);
+  this.getAllMissions();
 }
 
 
@@ -147,6 +150,11 @@ submit(missionActivity){
   }
   this.dateError = false;
 
+  if(this.checkDates2()) {
+    this.dateError2 = true;
+    return; 
+  }this.dateError2 = false;
+
   
   console.log(this.activityForm.value);
 
@@ -208,23 +216,64 @@ userCheck(){
   for(let i=0; i<3 ;i++){
     if( this.usersActivityRoles[i].Role=="" || this.usersActivityRoles[i].UserID=="" ){
       console.log('false role!')
-      this.usCk = false;
+      this.usCk = true;
       return false;
       }
       for(let j=0; j<3; j++){
         if((i!=j) && parseInt(this.usersActivityRoles[i].UserID) == parseInt(this.usersActivityRoles[j].UserID)){
           console.log('false User! '+ this.usersActivityRoles[i].UserID +'='+this.usersActivityRoles[j].UserID)
           console.log(i, j)
-          this.usCk = false;
+          this.usCk = true;
           return false;
           
         }
       }
     }
   console.log(true);
-  this.usCk = true;
+  this.usCk = false;
   return true;
 
+}
+getAllMissions(){
+  this.http
+  .get(`${CONFIG.BACKEND_API}/api/missions/list`)
+  .toPromise()
+  .then(res => {
+    this.allMissionDB=res
+    this.allMissionDB.forEach(item => {
+            if(item){
+          
+            if(this.missionId === item.MissionID){
+              item.Start_date =this.datepipe.transform(item.Start_date, 'dd-MM-yyyy');
+              item.End_date =this.datepipe.transform(item.End_date, 'dd-MM-yyyy');
+              this.currentMission = item;
+              console.log("this mission:"+ this.currentMission)
+            }
+  
+        }
+      })
+    })
+         
+  .catch(e => {
+    console.log(e);
+  });
+
+}
+checkDates = () => {
+  if (this && this.activityForm && new Date(this.activityForm.value.Start_date) > new Date(this.activityForm.value.End_date)) {
+    return true;
+  }
+  return false;
+}
+
+checkDates2 = () => {
+  
+  let s=this.datepipe.transform(this.activityForm.value.Start_date, 'dd-MM-yyyy')
+  let e= this.datepipe.transform(this.activityForm.value.End_date, 'dd-MM-yyyy')
+  if (s < this.currentMission.Start_date || this.currentMission.End_date < e) {
+    return true;
+  }
+  return false;
 }
 
 }

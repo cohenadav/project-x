@@ -16,25 +16,27 @@
         <table class="table table-hover">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col">#</th>
+                    <!-- <th scope="col">#</th> -->
                     <th scope="col">Name</th>
                     <th scope="col">Age</th>
                     <th scope="col">Gender</th>
                     <th scope="col">Height (cm)</th>
                     <th scope="col">Weight (kg)</th>
                     <th scope="col">Physical Score (1-5)</th>
+                    <th scope="col">Role</th>
                     <th scope="col">isAdmin</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let USER of userData">
-                    <th scope="row">{{USER.UserID}}</th>
+                    <!-- <th scope="row">{{USER.UserID}}</th> -->
                     <td>{{USER.Name}}</td>
                     <td>{{USER.Age}}</td>
                     <td>{{genderCheck(USER.Gender)}}</td>
                     <td>{{USER.Height}}</td>
                     <td>{{USER.Weight}}</td>
                     <td>{{USER.Physical_rate}}</td>
+                    <td>{{roleCheck(USER.Type)}}</td>
                     <td>{{isAdminCheck(USER.isAdmin)}}</td>
                     <div class="row">
                       <a routerLink="{{USER.UserID|json}}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Edit</a>

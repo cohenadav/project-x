@@ -61,14 +61,17 @@ export class MissionActivityComponent implements OnInit {
             this.missionActivities.forEach((act: { MA_ID: number; MissionID: number; ActivityID: number; Name?: string; Start_Date: string; Start_time?: string; Physical_rate:number; End_Date: string; End_time?: string; Status:number; status:String; Actual_Duration: number; Water_cons: number; Water_expected:number;}) => {
               console.log('Activity', act);
               if(act) {
-                let s = act.Start_Date
-                let e = act.End_Date
-                act.Start_Date =this.datepipe.transform(s, 'dd-MM-yyyy');
-                act.End_Date =this.datepipe.transform(e, 'dd-MM-yyyy');
-                var a = s.split("T");
-                var b = e.split("T");
+                
+                let s =this.datepipe.transform(act.Start_Date, 'dd-MM-yyyy hh:mm');
+                let e =this.datepipe.transform(act.End_Date,  'dd-MM-yyyy hh:mm');
+                // act.Start_Date =this.datepipe.transform(s, 'dd-MM-yyyy');
+                // act.End_Date =this.datepipe.transform(e, 'dd-MM-yyyy');
+                var a = s.split(" ");
+                var b = e.split(" ");
                 act.Start_time =a[1].substring(0,5);
                 act.End_time =b[1].substring(0,5);
+                act.Start_Date = a[0].substring(0,10);
+                act.End_Date = b[0].substring(0,10);
                 console.log(act);
                 if(act.Status == 0){
                   act.status = 'Scheduled'

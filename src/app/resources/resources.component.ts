@@ -25,8 +25,9 @@ export class ResourcesComponent implements OnInit {
     this.http
       .get(`${CONFIG.BACKEND_API}/api/resources/current_water`)
       .toPromise()
-      .then((res: {water:number}) => {
-        this.waterCall = res.water;
+      .then((res: {Current_Capacity:number}) => {
+        this.waterCall = res.Current_Capacity.toFixed(2);
+        console.log(this.waterCall);
         this.water = this.waterCall / this.totWater * 100;
       })
 

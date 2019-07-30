@@ -18,9 +18,11 @@ export class EditMissionFormComponent implements OnInit {
   public index;
   public errors = {};
   public errMsg = "";
+  public dateError: boolean;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, public datepipe: DatePipe,private router: Router) {
     this.Mission = {};
+    this,this.dateError = false;
    }
   
   
@@ -63,6 +65,11 @@ export class EditMissionFormComponent implements OnInit {
   }
 
   submit(mission){
+    if(this.checkDates(mission.Start_date, mission.End_date)){
+      this.dateError = true;
+      return; 
+    }
+    this.dateError = false;
     console.log(mission);
 
     mission.MissionID = this.Mission.MissionID;
@@ -96,6 +103,18 @@ export class EditMissionFormComponent implements OnInit {
     })
 
 
+  }
+  checkDates(a,b){
+    if (this && new Date(a) > new Date(b)) {
+      return true;
+    }
+    return false;
+    // return new Promise((res, rej) => {
+    //   if (this && this.missionForm && new Date(this.missionForm.value.Start_date) > new Date(this.missionForm.value.End_date)) {
+    //     return res({ notMatching: true });
+    //   }
+    //   return res(null);
+    // })
   }
 
 

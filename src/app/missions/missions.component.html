@@ -1,9 +1,9 @@
 <table class="table table-hover">
   <thead class="thead-light">
     <tr>
-      <th scope="col">#</th>
+      <!-- <th scope="col">#</th> -->
       <th scope="col">Name</th>
-      <th scope="col">Location</th>
+      <!-- <th scope="col">Location</th> -->
       <th scope="col">Start Date</th>
       <th scope="col">End Date</th>
       <th scope="col">Status</th>
@@ -11,16 +11,16 @@
   </thead>
   <tbody>
     <tr *ngFor="let mission of missionData" routerLink="{{mission.MissionID|json}}">
-      <th scope="row">{{mission.MissionID}}</th>
+      <!-- <th scope="row">{{mission.MissionID}}</th> -->
       <td>{{mission.Name}}</td>
-      <td>{{mission.location}}</td>
+      <!-- <td>{{mission.location}}</td> -->
       <td>{{mission.Start_date }}</td>
       <td>{{mission.End_date}}</td>
       <!-- <td>{{mission.command}}</td> -->
       <td>{{mission.status}}</td>
 
       <div class="row">
-        <a routerLink="{{mission.MissionID |json}}/mission-form/edit" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Edit</a>
+        <a *ngIf="mission.Status === 0 || mission.Status === 1" routerLink="{{mission.MissionID |json}}/mission-form/edit" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Edit</a>
         <!-- <button (click)="deleteMission(mission.id)">Delete</button> -->
       </div>
 
